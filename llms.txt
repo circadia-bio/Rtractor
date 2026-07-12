@@ -232,3 +232,9 @@ Package-level documentation.
   : Rtractor: Complexity and Nonlinear Time Series Analysis for
   Physiological Signals
 
+# Articles
+
+### Getting started
+
+- [Getting started with
+  Rtractor](https://rtractor.circadia-lab.uk/articles/getting-started.md):
