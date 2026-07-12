@@ -12,6 +12,11 @@
 
 ---
 
+> [!WARNING]
+> **Rtractor is in early development and several planned families are not yet implemented** (Lyapunov exponents, phase-space embedding, general recurrence quantification measures). Implemented functions have been validated against reference implementations or ground-truth synthetic data where one exists (see each function's documentation and `inst/COPYRIGHTS`), but the package as a whole has not undergone peer review and the API may change without notice. Verify outputs independently before using in any research context.
+
+---
+
 ## 📖 What is Rtractor?
 
 Rtractor is a shared "complexity toolkit" for the Circadia Lab / CoDe-Neuro
