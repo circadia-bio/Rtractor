@@ -69,7 +69,7 @@ perm_entropy <- function(x, order = 3L, delay = 1L, normalize = TRUE) {
 #'   convention, per Costa et al.).
 #' @param r Numeric > 0. Tolerance, as a fraction of `x`'s own standard
 #'   deviation (i.e. the actual Chebyshev-distance tolerance used is
-#'   `r * sd(x)`). Default `0.15` (the standard MSE convention).
+#'   `sd(x) * r`). Default `0.15` (the standard MSE convention).
 #'
 #' @return A length-1 numeric: the sample entropy. If there are too few
 #'   valid template pairs to compare (`length(x) - m < 2`), returns `NA`.
