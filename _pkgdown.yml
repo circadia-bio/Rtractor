@@ -6,7 +6,7 @@ template:
     # ── Colours (Rtractor palette) ──────────────────────────────────────────
     # coral #FFB6A6 | cream #FFEBD3 | sage #9BCEC1 | steel_blue #67A2C5
     # ink #23475C   | danger coral (darker) #D65F45
-    bg:              "#FFEBD3"          # cream
+    bg:              "#FFFFFF"          # white (page background)
     fg:              "#23475C"          # ink
     primary:         "#67A2C5"          # steel_blue
     secondary:       "#FFB6A6"          # coral
