@@ -24,14 +24,13 @@ Description: A staging- and signal-agnostic toolkit of complex systems
     Lab and CoDe-Neuro Lab packages (mrpheus, hypnoR, zeitR, dynR) as a
     shared complexity-metrics layer, while remaining fully usable standalone
     on any numeric time series.
-License: GPL (>= 2)
+License: GPL (>= 2) + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Depends:
     R (>= 4.1.0)
 Imports:
     Rcpp,
-    cli (>= 3.6.0),
     stats
 LinkingTo:
     Rcpp
