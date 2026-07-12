@@ -1,4 +1,4 @@
-# 🧪 Rtractor
+# 🦋 Rtractor
 
 **Complexity and nonlinear time series analysis for physiological
 signals — entropy, fractal/multifractal measures, Lyapunov exponents,
