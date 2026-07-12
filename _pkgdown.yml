@@ -213,6 +213,7 @@ articles:
   - getting-started
 
 - title: "Articles"
+  navbar: "Articles"
   contents:
   - multifractal-methods
   - entropy-and-complexity
