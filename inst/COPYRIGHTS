@@ -1,0 +1,58 @@
+Rtractor — third-party code attribution
+========================================
+
+This file records the provenance of reference implementations wrapped or
+ported into Rtractor, per the terms of their original licenses.
+
+--------------------------------------------------------------------------
+src/dfa.cpp  (direct C++ port — wraps GPL-licensed reference code)
+--------------------------------------------------------------------------
+Ported from dfa.c, distributed by PhysioNet.
+
+Original copyright:
+  Copyright (C) 2001-2005 Joe Mietus, C-K Peng, and George B. Moody
+
+Original license:
+  GNU General Public License, version 2, or (at your option) any later
+  version. (This is why Rtractor as a whole is licensed GPL (>= 2).)
+
+The R-level function dfa() in R/fractal.R reimplements the same
+algorithm (box-size geometric series, per-box polynomial detrending via
+normal equations, RMS fluctuation) in C++, validated to match the
+original compiled binary's output exactly on synthetic test data.
+
+Please cite, per the original authors' request, if used in published
+work:
+  Peng C-K, Buldyrev SV, Havlin S, Simons M, Stanley HE, Goldberger AL.
+  Mosaic organization of DNA nucleotides. Phys Rev E 1994;49:1685-1689.
+
+  Peng C-K, Havlin S, Stanley HE, Goldberger AL. Quantification of
+  scaling exponents and crossover phenomena in nonstationary heartbeat
+  time series. Chaos 1995;5:82-87.
+
+  Goldberger AL, Amaral LAN, Glass L, Hausdorff JM, Ivanov PCh, Mark RG,
+  Mietus JE, Moody GB, Peng CK, Stanley HE. PhysioBank, PhysioToolkit,
+  and PhysioNet: Components of a New Research Resource for Complex
+  Physiologic Signals. Circulation 101(23):e215-e220; 2000.
+
+--------------------------------------------------------------------------
+src/higuchi.cpp  (clean-room reimplementation from the published
+algorithm — not a translation of licensed source)
+--------------------------------------------------------------------------
+Algorithm: Higuchi T. Approach to an irregular time series on the basis
+of the fractal theory. Physica D 1988;31(2):277-283.
+
+A MATLAB reference implementation was consulted during development
+(Higuchi_FD.m, J. Monge Alvarez, Univ. of Valladolid, 2014-03-02; no
+license header present in the source file). The Rtractor C++ port was
+validated against a transliteration of that reference on synthetic test
+data (max abs. difference ~1e-11, floating-point rounding only).
+
+--------------------------------------------------------------------------
+Pending: MFDMA (multifractal detrending moving average) and the
+Chhabra-Jensen multifractal spectrum estimator — reference MATLAB
+sources received (MFDMA_1D.m; ChhabraJensen_Yuj_w0.m, co-authored by
+L. França), not yet ported. No license headers present in either source
+file; both are candidates for clean-room reimplementation from the
+published algorithms rather than direct translation, pending review.
+--------------------------------------------------------------------------
