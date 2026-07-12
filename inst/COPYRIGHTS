@@ -49,6 +49,40 @@ validated against a transliteration of that reference on synthetic test
 data (max abs. difference ~1e-11, floating-point rounding only).
 
 --------------------------------------------------------------------------
+src/microstates.cpp  (direct C++ port — wraps MIT-licensed reference code)
+--------------------------------------------------------------------------
+Ported from the Max_Entropy() routine in Entropy.jl:
+  https://github.com/circadia-bio/maxEntropy
+
+Original license: MIT (see LICENSE in the linked repository).
+
+This Julia script implements the recurrence-microstates maximum-entropy
+threshold search described in:
+  Corso G, Prado TL, dos Santos Lima GZ, Kurths J, Lopes SR. Quantifying
+  entropy using recurrence matrix microstates. Chaos 2018;28(8):083108.
+
+  Prado TL, dos Santos Lima GZ, Lobao-Soares B, do Nascimento GC, Corso G,
+  Fontenele-Araujo J, Kurths J, Lopes SR. Optimizing the detection of
+  nonstationary signals by using recurrence analysis. Chaos
+  2018;28(8):085703.
+
+It was used to produce the entropy estimates in a paper co-authored by
+L. Franca:
+  Ferre IBS, Corso G, dos Santos Lima GZ, Lopes SR, Leocadio-Miguel MA,
+  Franca LGS, de Lima Prado T, Araujo JF. Cycling reduces the entropy of
+  neuronal activity in the human adult cortex. PLOS ONE
+  2024;19(10):e0298703.
+
+Only the reusable Max_Entropy() core was ported (see
+recurrence_microstate_entropy() in R/rqa.R); the original script's
+main() (file I/O over named subject directories) is study-specific
+scaffolding and was not ported. Random pair sampling is done in R
+(reproducible via set.seed()), while the C++ core implements only the
+deterministic nested search loop, which was validated against a Python
+transliteration of the original on synthetic test data (exact match on
+S_max and eps_max given identical sampled index pairs).
+
+--------------------------------------------------------------------------
 Pending: MFDMA (multifractal detrending moving average) and the
 Chhabra-Jensen multifractal spectrum estimator — reference MATLAB
 sources received (MFDMA_1D.m; ChhabraJensen_Yuj_w0.m, co-authored by

@@ -3,6 +3,7 @@
 
 export(dfa)
 export(higuchi_fd)
+export(recurrence_microstate_entropy)
 export(rtractor_palette)
 export(rtractor_palettes)
 export(scale_color_rtractor)

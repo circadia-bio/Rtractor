@@ -38,9 +38,9 @@ literature.
 - 🎨 A dedicated Rtractor colour palette, ggplot2 scales, and
   `theme_rtractor()`
 
-None of the RQA, Lyapunov, multiscale, or multifractal metric functions
-are implemented yet. Currently working: `dfa()` and `higuchi_fd()`
-(fractal family). See `NEWS.md` for progress.
+None of the Lyapunov or multiscale metric functions are implemented yet.
+Currently working: `dfa()`, `higuchi_fd()` (fractal family) and
+`recurrence_microstate_entropy()` (RQA family). See `NEWS.md` for progress.
 
 ## 🗂️ Project Structure
 
@@ -52,14 +52,15 @@ Rtractor/
 │   ├── fractal.R            # dfa(), higuchi_fd(); planned: mfdma, chhabra_jensen
 │   ├── lyapunov.R           # planned: Rosenstein/Wolf
 │   ├── multiscale.R         # planned: MSE, RCMSE
-│   ├── rqa.R                # planned: recurrence matrix + RQA measures
+│   ├── rqa.R                # recurrence_microstate_entropy(); planned: RQA measures
 │   ├── embed.R              # planned: phase-space reconstruction utils
 │   ├── palettes.R           # rtractor_palette(), rtractor_palettes()
 │   ├── scales.R             # scale_{colour,fill}_rtractor(_c)()
 │   └── theme.R              # theme_rtractor()
 ├── src/
 │   ├── dfa.cpp              # DFA — wraps PhysioNet's dfa.c (GPL-2+)
-│   └── higuchi.cpp          # Higuchi FD — clean-room reimplementation
+│   ├── higuchi.cpp          # Higuchi FD — clean-room reimplementation
+│   └── microstates.cpp      # Recurrence microstates entropy — wraps MIT code
 ├── inst/
 │   └── COPYRIGHTS           # attribution for wrapped/ported reference code
 ├── tests/testthat/

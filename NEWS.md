@@ -14,6 +14,16 @@
 * `mfdma()` and `chhabra_jensen()` (multifractal spectrum) reference
   MATLAB sources received but not yet ported — pending.
 
+### 🔁 RQA family
+
+* Added `recurrence_microstate_entropy()` — recurrence microstates
+  maximum-entropy threshold search (Corso et al. 2018; Prado et al. 2018).
+  Direct C++ port of the deterministic core of `Max_Entropy()` from
+  `circadia-bio/maxEntropy` (Entropy.jl, MIT licensed), the script used
+  in Ferre et al. (2024, PLOS ONE). Random pair sampling moved to R for
+  set.seed()-reproducibility; core loop validated against a Python
+  transliteration of the original (exact match on synthetic test data).
+
 ### 🚀 Initial scaffold
 
 * Repository initialised: package skeleton (`DESCRIPTION`, `.Rprofile`,
