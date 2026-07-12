@@ -38,10 +38,11 @@ literature.
 - 🎨 A dedicated Rtractor colour palette, ggplot2 scales, and
   `theme_rtractor()`
 
-None of the Lyapunov or multiscale metric functions are implemented yet.
-Currently working: `dfa()`, `higuchi_fd()`, `mfdma()`, `chhabra_jensen()`,
+None of the Lyapunov metric functions are implemented yet. Currently
+working: `dfa()`, `higuchi_fd()`, `mfdma()`, `chhabra_jensen()`,
 `petrosian_fd()`, `hjorth_parameters()`, `num_zerocross()` (fractal
-family), `perm_entropy()` (entropy family), `recurrence_microstate_entropy()`
+family), `perm_entropy()`, `sample_entropy()` (entropy family),
+`multiscale_entropy()` (multiscale family), `recurrence_microstate_entropy()`
 (RQA family), and `pmodel()` (simulate family, for generating synthetic
 test signals). See `NEWS.md` for progress.
 
@@ -51,11 +52,11 @@ test signals). See `NEWS.md` for progress.
 Rtractor/
 ├── R/
 │   ├── Rtractor-package.R   # package-level doc / Rcpp registration
-│   ├── entropy.R            # perm_entropy(); planned: sample/approx entropy
+│   ├── entropy.R            # perm_entropy(), sample_entropy()
 │   ├── fractal.R            # dfa(), higuchi_fd(), mfdma(), chhabra_jensen(),
 │   │                       # petrosian_fd(), hjorth_parameters(), num_zerocross()
 │   ├── lyapunov.R           # planned: Rosenstein/Wolf
-│   ├── multiscale.R         # planned: MSE, RCMSE
+│   ├── multiscale.R         # multiscale_entropy(); planned: RCMSE
 │   ├── rqa.R                # recurrence_microstate_entropy(); planned: RQA measures
 │   ├── embed.R              # planned: phase-space reconstruction utils
 │   ├── simulate.R           # pmodel() -- synthetic multifractal test signals
@@ -68,6 +69,7 @@ Rtractor/
 │   ├── fractal_multifractal.cpp  # MFDMA, Chhabra-Jensen — clean-room
 │   ├── fractal_nonlinear.cpp     # Petrosian FD, Hjorth, zero-crossings — from mrpheus
 │   ├── entropy.cpp          # Permutation entropy — from mrpheus
+│   ├── sample_entropy.cpp   # Sample/multiscale entropy — wraps PhysioNet's mse.c (GPL-2+)
 │   └── microstates.cpp      # Recurrence microstates entropy — wraps MIT code
 ├── inst/
 │   └── COPYRIGHTS           # attribution for wrapped/ported reference code

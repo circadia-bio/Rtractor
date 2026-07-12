@@ -1,5 +1,19 @@
 ## Rtractor 0.0.0.9000
 
+### 📉 Multiscale family
+
+* Added `multiscale_entropy()` — multiscale entropy (MSE; Costa,
+  Goldberger & Peng 2002), the first function in the previously-empty
+  multiscale family. Direct C++ port of the counting core in PhysioNet's
+  reference `mse.c` (Costa), validated to reproduce the compiled
+  reference binary's output exactly (to its own displayed precision) on
+  synthetic test data, both at the sample-entropy level and for the full
+  multiscale sweep.
+* Added `sample_entropy()` — sample entropy (SampEn; Richman & Moorman
+  2000), filling a previously-planned gap in the entropy family and
+  serving as the building block `multiscale_entropy()` applies at each
+  coarse-grained scale.
+
 ### 🎲 Simulate family
 
 * Added `pmodel()` — multifractal binomial cascade generator (Meneveau &

@@ -51,9 +51,71 @@ perm_entropy <- function(x, order = 3L, delay = 1L, normalize = TRUE) {
   h
 }
 
+#' Sample Entropy (SampEn)
+#'
+#' Estimates the complexity of a time series using sample entropy
+#' (Richman & Moorman 2000): the negative log ratio of template matches
+#' of length `m + 1` to template matches of length `m`, using a fixed
+#' Chebyshev-distance tolerance. Direct C++ port of the counting core in
+#' PhysioNet's reference `mse.c` (Costa), validated to reproduce the
+#' compiled reference binary's output exactly (to its own displayed
+#' precision) on synthetic test data. See `inst/COPYRIGHTS`.
+#'
+#' This is also the building block `multiscale_entropy()` applies at each
+#' coarse-grained scale -- see `R/multiscale.R`.
+#'
+#' @param x Numeric vector. The time series to analyse.
+#' @param m Integer >= 1. Template length. Default `2` (the standard MSE
+#'   convention, per Costa et al.).
+#' @param r Numeric > 0. Tolerance, as a fraction of `x`'s own standard
+#'   deviation (i.e. the actual Chebyshev-distance tolerance used is
+#'   `r * sd(x)`). Default `0.15` (the standard MSE convention).
+#'
+#' @return A length-1 numeric: the sample entropy. If there are too few
+#'   valid template pairs to compare (`length(x) - m < 2`), returns `NA`.
+#'   If there are zero matches at either template length (undefined ratio),
+#'   returns the conventional fallback `-log(1 / (N*(N-1)))` used by the
+#'   reference implementation, where `N = length(x) - m`.
+#'
+#' @references
+#' Richman JS, Moorman JR. Physiological time-series analysis using
+#' approximate entropy and sample entropy. Am J Physiol Heart Circ
+#' Physiol 2000;278(6):H2039-H2049.
+#'
+#' @examples
+#' set.seed(1)
+#' sample_entropy(rnorm(1000))
+#'
+#' @export
+sample_entropy <- function(x, m = 2L, r = 0.15) {
+  if (!is.numeric(x)) stop("`x` must be numeric.", call. = FALSE)
+  m <- as.integer(m)
+  if (m < 1L) stop("`m` must be >= 1.", call. = FALSE)
+  if (r <= 0) stop("`r` must be > 0.", call. = FALSE)
+
+  x <- as.double(x)
+  tolerance <- r * stats::sd(x)
+  .sample_entropy_core(x, m, tolerance)
+}
+
+#' @keywords internal
+.sample_entropy_core <- function(x, m, tolerance) {
+  n <- length(x)
+  nlin_m <- n - m
+  if (nlin_m < 2L) return(NA_real_)
+
+  counts <- sample_entropy_counts_cpp(x, m, tolerance)
+  cont_m <- counts[m]
+  cont_m1 <- counts[m + 1]
+
+  if (cont_m == 0 || cont_m1 == 0) {
+    return(-log(1 / (nlin_m * (nlin_m - 1))))
+  }
+  -log(cont_m1 / cont_m)
+}
+
 # ---- Planned, not yet implemented -----------------------------------------
 #
-#   - sample_entropy()       Sample entropy (SampEn), Richman & Moorman 2000
 #   - approx_entropy()       Approximate entropy (ApEn), Pincus 1991
 #   - shannon_entropy()      Shannon entropy of a discretised/binned signal
 #   - renyi_entropy()        Renyi entropy, parametrised by order q

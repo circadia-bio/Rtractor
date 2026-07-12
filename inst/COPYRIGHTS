@@ -214,3 +214,42 @@ https://github.com/lucasfr/chhabra-jensen.
   for machine learning in clinical applications. Front Physiol
   2018;9:1767.
 --------------------------------------------------------------------------
+
+--------------------------------------------------------------------------
+src/sample_entropy.cpp (sample_entropy, multiscale_entropy)  (direct C++
+port — wraps GPL-licensed reference code)
+--------------------------------------------------------------------------
+Ported from mse.c, distributed by PhysioNet.
+
+Original copyright:
+  Copyright (C) 2004 Madalena Costa
+
+Original license:
+  GNU General Public License, version 2, or (at your option) any later
+  version. (Same GPL(>=2) family already established for Rtractor via
+  dfa.c.)
+
+The sample_entropy_counts_cpp() core reimplements the same algorithm
+(coarse-graining is unaffected -- that step is done in R, R/multiscale.R;
+the C++ core is the O(N^2) template-matching counting loop), validated
+to reproduce the compiled reference binary's output exactly (to its own
+displayed 3-decimal precision) on synthetic test data, both for a single
+sample_entropy() call and for the full multiscale_entropy() sweep across
+scales 1-10 at the standard m=2, r=0.15 defaults.
+
+Please cite, per PhysioNet convention, if used in published work:
+  Costa M, Goldberger AL, Peng CK. Multiscale entropy analysis of complex
+  physiologic time series. Phys Rev Lett 2002;89:068102.
+
+  Costa M, Goldberger AL, Peng CK. Multiscale entropy analysis of
+  biological signals. Phys Rev E 2005;71:021906.
+
+  Richman JS, Moorman JR. Physiological time-series analysis using
+  approximate entropy and sample entropy. Am J Physiol Heart Circ
+  Physiol 2000;278(6):H2039-H2049.
+
+  Goldberger AL, Amaral LAN, Glass L, Hausdorff JM, Ivanov PCh, Mark RG,
+  Mietus JE, Moody GB, Peng CK, Stanley HE. PhysioBank, PhysioToolkit,
+  and PhysioNet: Components of a New Research Resource for Complex
+  Physiologic Signals. Circulation 101(23):e215-e220; 2000.
+--------------------------------------------------------------------------

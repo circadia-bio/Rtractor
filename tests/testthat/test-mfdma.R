@@ -34,3 +34,32 @@ test_that("mfdma() respects theta argument without erroring", {
   expect_true(all(is.finite(res_centered$tau)))
   expect_true(all(is.finite(res_forward$tau)))
 })
+
+test_that("mfdma() correctly detects increasing multifractality in known p-model ground truth", {
+  # Round-trip check against pmodel(): the p-model's multifractality is
+  # controlled directly by its `p` parameter (p near 0.5 -> near-
+  # monofractal; p far from 0.5 -> strongly multifractal), so mfdma()'s
+  # estimated spectrum width should increase monotonically as p moves
+  # away from 0.5. Note: mfdma() expects the raw p-model output directly
+  # (it does its own internal integration) -- do NOT log-difference it
+  # first, which destroys the multifractal structure before mfdma() ever
+  # sees it.
+  y_mono   <- pmodel(8192, p = 0.48, seed = 1)
+  y_multi  <- pmodel(8192, p = 0.15, seed = 1)
+  y_strong <- pmodel(8192, p = 0.05, seed = 1)
+
+  res_mono   <- mfdma(y_mono,   n_min = 10, n_max = 400, n_scales = 25)
+  res_multi  <- mfdma(y_multi,  n_min = 10, n_max = 400, n_scales = 25)
+  res_strong <- mfdma(y_strong, n_min = 10, n_max = 400, n_scales = 25)
+
+  width_mono   <- diff(range(res_mono$alpha))
+  width_multi  <- diff(range(res_multi$alpha))
+  width_strong <- diff(range(res_strong$alpha))
+
+  # Near p = 0.5, the spectrum should collapse to near-zero width
+  expect_lt(width_mono, 0.1)
+
+  # Width must increase monotonically as p moves away from 0.5
+  expect_lt(width_mono, width_multi)
+  expect_lt(width_multi, width_strong)
+})
