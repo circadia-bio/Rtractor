@@ -253,6 +253,15 @@ mfdma <- function(x, n_min = 10L, n_max = NULL, n_scales = 30L, theta = 0,
 #' Chhabra A, Jensen RV. Direct determination of the f(alpha) singularity
 #' spectrum. Phys Rev Lett 1989;62:1327-1330.
 #'
+#' Franca LGS, Miranda JGV, Leite M, Sharma NK, Walker MC, Lemieux L,
+#' Wang Y. Fractal and multifractal properties of electrographic
+#' recordings of human brain activity: toward its use as a signal feature
+#' for machine learning in clinical applications. Front Physiol
+#' 2018;9:1767. Compares MF-DFA, MF-DMA, and Chhabra-Jensen on simulated
+#' and human intracranial EEG data and finds Chhabra-Jensen the most
+#' stable/reliable of the three -- the basis for implementing this method
+#' (rather than MF-DFA) alongside `mfdma()` in Rtractor.
+#'
 #' @examples
 #' set.seed(1)
 #' x <- abs(rnorm(1024)) + 0.01

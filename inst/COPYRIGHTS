@@ -161,4 +161,18 @@ by L. G. S. Franca and Yujiang Wang; no license header present in the
 source file). The moments core was validated against a Python
 transliteration of that reference on synthetic test data (exact match to
 displayed precision).
+
+Provenance: this is the multifractal estimation method used and
+recommended in L. Franca's own paper below, which benchmarks it against
+MF-DFA and MF-DMA on simulated and human intracranial EEG data and finds
+it the most stable/reliable of the three -- the reason it (rather than
+MF-DFA) was implemented alongside mfdma() in Rtractor. The paper's own
+code repository (referenced in its Methods section) is
+https://github.com/lucasfr/chhabra-jensen.
+
+  Franca LGS, Miranda JGV, Leite M, Sharma NK, Walker MC, Lemieux L,
+  Wang Y. Fractal and multifractal properties of electrographic
+  recordings of human brain activity: toward its use as a signal feature
+  for machine learning in clinical applications. Front Physiol
+  2018;9:1767.
 --------------------------------------------------------------------------
