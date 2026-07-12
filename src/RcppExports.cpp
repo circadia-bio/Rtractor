@@ -128,6 +128,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// sample_entropy_counts_cpp
+NumericVector sample_entropy_counts_cpp(NumericVector y, int m, double tolerance);
+RcppExport SEXP _Rtractor_sample_entropy_counts_cpp(SEXP ySEXP, SEXP mSEXP, SEXP toleranceSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< int >::type m(mSEXP);
+    Rcpp::traits::input_parameter< double >::type tolerance(toleranceSEXP);
+    rcpp_result_gen = Rcpp::wrap(sample_entropy_counts_cpp(y, m, tolerance));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_Rtractor_dfa_cpp", (DL_FUNC) &_Rtractor_dfa_cpp, 6},
@@ -139,6 +152,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Rtractor_hjorth_cpp", (DL_FUNC) &_Rtractor_hjorth_cpp, 1},
     {"_Rtractor_higuchi_length_cpp", (DL_FUNC) &_Rtractor_higuchi_length_cpp, 2},
     {"_Rtractor_recurrence_microstate_entropy_cpp", (DL_FUNC) &_Rtractor_recurrence_microstate_entropy_cpp, 8},
+    {"_Rtractor_sample_entropy_counts_cpp", (DL_FUNC) &_Rtractor_sample_entropy_counts_cpp, 3},
     {NULL, NULL, 0}
 };
 

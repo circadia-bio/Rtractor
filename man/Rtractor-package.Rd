@@ -6,6 +6,8 @@
 \alias{Rtractor-package}
 \title{Rtractor: Complexity and Nonlinear Time Series Analysis for Physiological Signals}
 \description{
+\if{html}{\figure{logo.svg}{options: style='float: right' alt='logo' width='120'}}
+
 A staging- and signal-agnostic toolkit of complex systems measures for physiological time series: entropy (sample, permutation, approximate), fractal and multifractal analysis (Higuchi dimension, DFA, MFDFA), Lyapunov exponents, multiscale entropy, and recurrence quantification analysis. Core algorithms wrap established C/C++/Fortran reference implementations rather than reimplementing them in pure R, to preserve numerical parity with the original methods literature. Some wrapped reference implementations are GPL-licensed (see inst/COPYRIGHTS), which is why the package as a whole is licensed GPL (>= 2) rather than MIT. Designed to sit underneath other Circadia Lab and CoDe-Neuro Lab packages (mrpheus, hypnoR, zeitR, dynR) as a shared complexity-metrics layer, while remaining fully usable standalone on any numeric time series.
 }
 \seealso{

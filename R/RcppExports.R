@@ -46,3 +46,8 @@ recurrence_microstate_entropy_cpp <- function(serie, x_idx, y_idx, block, eps_mi
     .Call(`_Rtractor_recurrence_microstate_entropy_cpp`, serie, x_idx, y_idx, block, eps_min, eps_max, frac, frac2)
 }
 
+#' @keywords internal
+sample_entropy_counts_cpp <- function(y, m, tolerance) {
+    .Call(`_Rtractor_sample_entropy_counts_cpp`, y, m, tolerance)
+}
+
