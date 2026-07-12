@@ -27,7 +27,6 @@ Description: A staging- and signal-agnostic toolkit of complex systems
 License: GPL (>= 2)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-VignetteBuilder: knitr
 Depends:
     R (>= 4.1.0)
 Imports:

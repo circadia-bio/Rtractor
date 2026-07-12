@@ -1,4 +1,8 @@
 # Rtractor ggplot2 scales
+#
+# ggplot2 is a Suggests-only dependency (see theme.R note). Every function
+# here guards with requireNamespace() and calls ggplot2:: explicitly rather
+# than using @importFrom, so no hard Imports dependency is created.
 
 # ---- Colour interpolation helper -------------------------------------------
 
@@ -40,10 +44,12 @@
 #'   scale_colour_rtractor() +
 #'   theme_rtractor()
 #'
-#' @importFrom ggplot2 discrete_scale
 #' @export
 scale_colour_rtractor <- function(palette = "core", reverse = FALSE, ...) {
-  discrete_scale(
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("Package 'ggplot2' is required for scale_colour_rtractor().", call. = FALSE)
+  }
+  ggplot2::discrete_scale(
     aesthetics = "colour",
     palette    = .rtractor_pal(palette, reverse),
     ...
@@ -67,10 +73,12 @@ scale_color_rtractor <- scale_colour_rtractor
 #'   scale_fill_rtractor() +
 #'   theme_rtractor()
 #'
-#' @importFrom ggplot2 discrete_scale
 #' @export
 scale_fill_rtractor <- function(palette = "core", reverse = FALSE, ...) {
-  discrete_scale(
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("Package 'ggplot2' is required for scale_fill_rtractor().", call. = FALSE)
+  }
+  ggplot2::discrete_scale(
     aesthetics = "fill",
     palette    = .rtractor_pal(palette, reverse),
     ...
@@ -90,11 +98,13 @@ scale_fill_rtractor <- function(palette = "core", reverse = FALSE, ...) {
 #' @param reverse Logical. Reverse the palette? Default `FALSE`.
 #' @param ... Additional arguments passed to [ggplot2::scale_colour_gradientn()].
 #'
-#' @importFrom ggplot2 scale_colour_gradientn
 #' @export
 scale_colour_rtractor_c <- function(palette = "seq_blue", reverse = FALSE, ...) {
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("Package 'ggplot2' is required for scale_colour_rtractor_c().", call. = FALSE)
+  }
   colours <- unname(rtractor_palette(palette, reverse = reverse))
-  scale_colour_gradientn(colours = colours, ...)
+  ggplot2::scale_colour_gradientn(colours = colours, ...)
 }
 
 #' @rdname scale_colour_rtractor_c
@@ -107,9 +117,11 @@ scale_color_rtractor_c <- scale_colour_rtractor_c
 #'
 #' @inheritParams scale_colour_rtractor_c
 #'
-#' @importFrom ggplot2 scale_fill_gradientn
 #' @export
 scale_fill_rtractor_c <- function(palette = "seq_blue", reverse = FALSE, ...) {
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("Package 'ggplot2' is required for scale_fill_rtractor_c().", call. = FALSE)
+  }
   colours <- unname(rtractor_palette(palette, reverse = reverse))
-  scale_fill_gradientn(colours = colours, ...)
+  ggplot2::scale_fill_gradientn(colours = colours, ...)
 }
