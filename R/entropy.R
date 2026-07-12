@@ -22,7 +22,11 @@
 #'   Default `1`.
 #' @param normalize Logical. If `TRUE` (default), divide by `log(order!)`
 #'   so the result falls in `[0, 1]`. If `FALSE`, return the raw Shannon
-#'   entropy in nats.
+#'   entropy in nats (natural log). Note this differs from the `antropy`
+#'   Python library, which computes the raw value in bits (log base 2);
+#'   the normalized value is base-independent and matches `antropy`
+#'   exactly, but the raw values are not directly comparable between the
+#'   two. See `inst/COPYRIGHTS`.
 #'
 #' @return A length-1 numeric: the permutation entropy.
 #'

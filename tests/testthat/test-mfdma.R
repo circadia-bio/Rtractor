@@ -17,7 +17,10 @@ test_that("mfdma() validates inputs", {
   expect_error(mfdma("not numeric"), "must be numeric")
   expect_error(mfdma(rnorm(100), n_min = 1), "n_min")
   expect_error(mfdma(rnorm(100), n_min = 20, n_max = 10), "n_max")
-  expect_error(mfdma(rnorm(100), theta = 1.5), "theta")
+  # Use a longer series so the default n_max doesn't collide with n_min
+  # (length 100 with defaults gives n_max = 10 = n_min, which would
+  # trigger the n_max check before theta is ever validated).
+  expect_error(mfdma(rnorm(2000), theta = 1.5), "theta")
 })
 
 test_that("mfdma() respects theta argument without erroring", {

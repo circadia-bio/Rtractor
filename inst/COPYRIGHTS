@@ -19,12 +19,24 @@ purpose complexity measures rather than maintaining private duplicates,
 per the ecosystem's "wrap, don't reimplement" and isolation principles.
 
 Re-validated directly against the antropy Python library (v0.2.2) on
-synthetic test data during this port:
-  - perm_entropy: exact match
+synthetic and fixed-vector test data during this port:
+  - perm_entropy: exact match on the normalized value (default,
+    normalize=TRUE). The *unnormalized* raw value is not directly
+    comparable between the two: antropy computes raw entropy in log
+    base 2 (bits), this port in natural log (nats). The normalized
+    ratio is base-independent, which is why it matches exactly while
+    the raw values differ by a factor of ln(2).
   - petrosian_fd: exact match
   - num_zerocross: exact match
-  - hjorth_parameters: near-exact match (residual difference is
-    floating-point summation-order noise, not algorithmic)
+  - hjorth_parameters: agrees closely but NOT exactly, by design. This
+    port uses Bessel-corrected (ddof=1) variance throughout, matching
+    mrpheus's original implementation (itself deliberately matching R's
+    var() convention, per mrpheus's own source comments) rather than
+    antropy's population-variance (ddof=0) convention. The discrepancy
+    shrinks as length(x) grows (negligible for epoch-length signals,
+    ~1000+ samples) but is clearly visible for short series (e.g. ~0.1%
+    difference at length 20) -- it is a genuine convention difference,
+    not floating-point noise.
 
 Note: Rtractor's higuchi_fd() (see the Higuchi entry above) was
 independently ported from a different MATLAB reference, and was found

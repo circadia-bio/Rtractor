@@ -152,6 +152,8 @@ higuchi_fd <- function(x, k_max = 10L) {
 mfdma <- function(x, n_min = 10L, n_max = NULL, n_scales = 30L, theta = 0,
                    q = seq(-4, 4, by = 0.1)) {
   if (!is.numeric(x)) stop("`x` must be numeric.", call. = FALSE)
+  if (theta < 0 || theta > 1) stop("`theta` must be in [0, 1].", call. = FALSE)
+
   x <- as.double(x)
   M <- length(x)
   if (is.null(n_max)) n_max <- round(M / 10)
@@ -159,7 +161,6 @@ mfdma <- function(x, n_min = 10L, n_max = NULL, n_scales = 30L, theta = 0,
   n_max <- as.integer(n_max)
   if (n_min < 2L) stop("`n_min` must be >= 2.", call. = FALSE)
   if (n_max <= n_min) stop("`n_max` must be greater than `n_min`.", call. = FALSE)
-  if (theta < 0 || theta > 1) stop("`theta` must be in [0, 1].", call. = FALSE)
 
   scales <- unique(as.integer(round(
     10^seq(log10(n_min), log10(n_max), length.out = n_scales)
@@ -358,11 +359,12 @@ petrosian_fd <- function(x) {
 #' frequency derived from the variance ratio of the first difference to
 #' the signal itself; and complexity, a proxy for bandwidth/irregularity
 #' derived from the second difference. Ported from Lucas Franca's own
-#' `mrpheus` package (AASM staging feature pipeline), itself validated for
-#' exact parity against the `antropy` Python library; re-validated here
-#' directly against `antropy` 0.2.2 on synthetic test data (near-exact
-#' match; residual difference is floating-point summation-order noise).
-#' See `inst/COPYRIGHTS`.
+#' `mrpheus` package (AASM staging feature pipeline). Uses Bessel-corrected
+#' (`ddof = 1`) variance throughout, deliberately matching R's `var()`
+#' convention -- this was mrpheus's original design choice, and differs
+#' slightly from the `antropy` Python library's population-variance
+#' (`ddof = 0`) convention. The two converge as `length(x)` grows but
+#' differ meaningfully for short series; see `inst/COPYRIGHTS`.
 #'
 #' @param x Numeric vector. The time series to analyse.
 #'

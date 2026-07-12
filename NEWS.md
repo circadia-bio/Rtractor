@@ -7,10 +7,14 @@
   from Lucas França's own `mrpheus` package (its AASM staging feature
   pipeline, itself a validated R/C++ port of the YASA/antropy Python
   feature set). Re-validated directly against antropy 0.2.2 during this
-  port (exact match for three; near-exact for `hjorth_parameters`, a
-  floating-point summation-order artifact). Rtractor's existing
-  `higuchi_fd()` was cross-checked against mrpheus/antropy's version and
-  found to agree exactly for realistic epoch lengths.
+  port: exact match for `perm_entropy` (normalized value), `petrosian_fd`,
+  and `num_zerocross`. `hjorth_parameters` agrees closely but not exactly
+  by design — it uses Bessel-corrected (ddof=1) variance, matching
+  mrpheus's/R's convention, rather than antropy's population-variance
+  (ddof=0) convention; the difference shrinks as signal length grows.
+  Rtractor's existing `higuchi_fd()` was cross-checked against
+  mrpheus/antropy's version and found to agree exactly for realistic
+  epoch lengths.
 
 ### 🌿 Fractal family
 
