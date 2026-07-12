@@ -1,8 +1,14 @@
-# 🧪 Rtractor
+# 🧪 Rtractor <img src="man/figures/logo.svg" align="right" height="140"/>
 
 **Complexity and nonlinear time series analysis for physiological signals — entropy, fractal/multifractal measures, Lyapunov exponents, multiscale metrics, and recurrence quantification analysis, wrapping established C/C++/Fortran reference implementations.**
+
+[![r-universe](https://circadia-bio.r-universe.dev/badges/Rtractor)](https://circadia-bio.r-universe.dev/Rtractor)
 [![License: GPL (>= 2)](https://img.shields.io/badge/License-GPL%20(%3E%3D%202)-blue.svg)](./LICENSE)
 [![R](https://img.shields.io/badge/R-%3E%3D4.1.0-276DC3.svg)](https://www.r-project.org/)
+[![R CMD CHECK](https://github.com/circadia-bio/Rtractor/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/circadia-bio/Rtractor/actions/workflows/R-CMD-check.yaml)
+[![Coverage](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/circadia-bio/Rtractor/gh-pages/badges/coverage.json)](https://github.com/circadia-bio/Rtractor/actions/workflows/pkgdown.yaml)
+[![Status](https://img.shields.io/badge/status-early%20development-orange)](https://github.com/circadia-bio/Rtractor)
+[![pkgdown](https://img.shields.io/badge/docs-rtractor.circadia--lab.uk-F0A500)](https://rtractor.circadia-lab.uk)
 
 ---
 
