@@ -14,13 +14,28 @@ test_that("dfa() recovers expected scaling for white noise", {
 test_that("dfa() recovers expected scaling for a random walk", {
   set.seed(1)
   x <- rnorm(3000)
-  # already-integrated random walk; analyse without re-integrating
+  # A random walk fed through the standard DFA pipeline (default
+  # integrate = TRUE) amounts to double integration -- the classic
+  # textbook benchmark that gives alpha ~ 1.5.
   walk <- cumsum(x)
-  res <- dfa(walk, integrate = FALSE)
+  res <- dfa(walk)
 
-  # Random walk: alpha ~ 1.5
   expect_gt(res$alpha, 1.3)
   expect_lt(res$alpha, 1.7)
+})
+
+test_that("dfa() with integrate = FALSE analyses the profile directly", {
+  set.seed(1)
+  x <- rnorm(3000)
+  walk <- cumsum(x)
+  # Skipping the internal integration and analysing the random walk
+  # trajectory directly (as its own profile) recovers its own Hurst
+  # exponent, ~0.5 for a standard random walk -- verified against the
+  # reference dfa.c binary run with its -i flag.
+  res <- dfa(walk, integrate = FALSE)
+
+  expect_gt(res$alpha, 0.35)
+  expect_lt(res$alpha, 0.65)
 })
 
 test_that("dfa() validates inputs", {
