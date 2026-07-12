@@ -146,10 +146,10 @@ pmodel <- function(n_values = 256L, p = 0.375, slope = NULL, seed = 42L) {
 
   # R's fft(inverse = TRUE) is unnormalised, unlike MATLAB's ifft(); divide
   # by n to match MATLAB's convention exactly.
-  xf <- fft(y - mean_val, inverse = TRUE) / n
+  xf <- stats::fft(y - mean_val, inverse = TRUE) / n
   phase <- Arg(xf)
   xf2 <- fourier_coeff * exp(1i * phase)
-  x <- Re(fft(xf2))
+  x <- Re(stats::fft(xf2))
   x <- x * std_y / stats::sd(x)
   x + mean_val
 }

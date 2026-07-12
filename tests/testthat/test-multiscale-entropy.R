@@ -3,11 +3,12 @@ test_that("multiscale_entropy() matches the reference mse.c binary on synthetic 
   x <- rnorm(2000)
   res <- multiscale_entropy(x, scale_max = 10)
 
-  # Reference (mse.c, m=2, r=0.15, scales 1-10), tool's own displayed
+  # Reference (mse.c, m=2, r=0.15, scales 1-10), run directly on this exact
+  # R-generated sequence (set.seed(99); rnorm(2000)), tool's own displayed
   # precision (3 decimals):
-  #   1  2.458   2  2.092   3  1.956   4  1.788   5  1.710
-  #   6  1.540   7  1.534   8  1.443   9  1.412  10  1.395
-  expected <- c(2.458, 2.092, 1.956, 1.788, 1.710, 1.540, 1.534, 1.443, 1.412, 1.395)
+  #   1  2.504   2  2.086   3  1.932   4  1.836   5  1.775
+  #   6  1.682   7  1.444   8  1.534   9  1.508  10  1.433
+  expected <- c(2.504, 2.086, 1.932, 1.836, 1.775, 1.682, 1.444, 1.534, 1.508, 1.433)
 
   expect_named(res, c("scale", "mse", "m", "r"))
   expect_equal(res$scale, 1:10)

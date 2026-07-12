@@ -322,9 +322,16 @@ chhabra_jensen <- function(x,
     q <- q_values[i]
     Dq[i] <- if (q > 0 && q <= 1) b_md else b_md / (q - 1)
 
-    r2_alpha[i]  <- summary(fit_a)$r.squared
-    r2_falpha[i] <- summary(fit_f)$r.squared
-    r2_Dq[i]     <- summary(fit_d)$r.squared
+    # Computed directly rather than via summary.lm()$r.squared: these
+    # regressions are frequently a near-perfect fit (the data closely
+    # follows the theoretical power law), which makes summary.lm() emit
+    # "essentially perfect fit: summary may be unreliable" -- a base R
+    # warning about its own internal numerics, not a problem with the R^2
+    # value itself. Computing R^2 from residuals directly avoids that
+    # code path (and the warning) entirely.
+    r2_alpha[i]  <- .r_squared(fit_a, Ma[i, ])
+    r2_falpha[i] <- .r_squared(fit_f, Mf[i, ])
+    r2_Dq[i]     <- .r_squared(fit_d, Md[i, ])
   }
 
   list(
@@ -332,6 +339,15 @@ chhabra_jensen <- function(x,
     r_squared_alpha = r2_alpha, r_squared_falpha = r2_falpha, r_squared_Dq = r2_Dq,
     q = q_values, mu_scale = mu_scale, Ma = Ma, Mf = Mf, Md = Md
   )
+}
+
+#' @keywords internal
+.r_squared <- function(fit, y) {
+  yhat <- stats::fitted(fit)
+  ss_res <- sum((y - yhat)^2)
+  ss_tot <- sum((y - mean(y))^2)
+  if (ss_tot == 0) return(1)
+  1 - ss_res / ss_tot
 }
 
 #' Petrosian Fractal Dimension

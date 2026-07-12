@@ -1,10 +1,11 @@
 test_that("sample_entropy() matches the reference mse.c binary on synthetic data (to displayed precision)", {
   set.seed(99)
   x <- rnorm(2000)
-  # Reference (mse.c, m=2, r=0.15) at scale 1 (no coarse-graining):
-  # 1  2.458  (tool's own displayed precision, 3 decimals)
+  # Reference (mse.c, m=2, r=0.15) at scale 1 (no coarse-graining), run
+  # directly on this exact R-generated sequence (set.seed(99); rnorm(2000)):
+  # 1  2.504  (tool's own displayed precision, 3 decimals)
   res <- sample_entropy(x, m = 2, r = 0.15)
-  expect_equal(res, 2.458, tolerance = 5e-4)
+  expect_equal(res, 2.504, tolerance = 5e-4)
 })
 
 test_that("sample_entropy() decreases (roughly) for more regular signals", {
