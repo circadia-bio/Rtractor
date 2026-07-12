@@ -84,6 +84,10 @@ Rtractor/
 │   └── microstates.cpp      # Recurrence microstates entropy — wraps MIT code
 ├── inst/
 │   └── COPYRIGHTS           # attribution for wrapped/ported reference code
+├── vignettes/
+│   ├── getting-started.Rmd       # tour of every implemented family
+│   ├── multifractal-methods.Rmd  # mfdma() vs chhabra_jensen(), validated against pmodel() ground truth
+│   └── entropy-and-complexity.Rmd  # perm_entropy/sample_entropy/multiscale_entropy, white noise vs correlated signal
 ├── tests/testthat/
 ├── man/
 ├── DESCRIPTION

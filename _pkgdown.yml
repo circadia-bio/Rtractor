@@ -144,7 +144,7 @@ home:
 
 navbar:
   structure:
-    left:  [intro, reference, news]
+    left:  [intro, reference, articles, news]
     right: [search, github]
   components:
     intro:
@@ -211,6 +211,11 @@ articles:
   navbar: ~
   contents:
   - getting-started
+
+- title: "Articles"
+  contents:
+  - multifractal-methods
+  - entropy-and-complexity
 
 news:
   releases:
