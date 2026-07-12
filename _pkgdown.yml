@@ -1,0 +1,213 @@
+url: https://rtractor.circadia-lab.uk
+
+template:
+  bootstrap: 5
+  bslib:
+    # ── Colours (Rtractor palette) ──────────────────────────────────────────
+    # coral #FFB6A6 | cream #FFEBD3 | sage #9BCEC1 | steel_blue #67A2C5
+    # ink #23475C   | danger coral (darker) #D65F45
+    bg:              "#FFEBD3"          # cream
+    fg:              "#23475C"          # ink
+    primary:         "#67A2C5"          # steel_blue
+    secondary:       "#FFB6A6"          # coral
+    success:         "#9BCEC1"          # sage
+    info:            "#9BCEC1"          # sage
+    warning:         "#FFB6A6"          # coral
+    danger:          "#D65F45"          # darker coral
+
+    # ── Fonts ──────────────────────────────────────────────────────────────────
+    base_font:    {google: "DM Sans"}
+    heading_font: {google: "DM Sans"}
+    code_font:    {google: "JetBrains Mono"}
+
+    # ── Typography ─────────────────────────────────────────────────────────────
+    font-size-base:       "1rem"
+    headings-font-weight: 700
+
+    # ── Cards / surfaces ───────────────────────────────────────────────────────
+    card-bg:              "#FFF8F0"
+    card-border-color:    "#9BCEC1"
+    card-border-radius:   "0.75rem"
+
+    # ── Code blocks ────────────────────────────────────────────────────────────
+    pre-bg:    "#23475C"
+    pre-color: "#FFEBD3"
+
+  includes:
+    in_header: |
+      <meta name="theme-color" content="#23475C">
+      <style>
+        /* ── Navbar ── */
+        .navbar {
+          background-color: #23475C !important;
+          border-bottom: 3px solid #FFB6A6;
+        }
+        .navbar .navbar-brand,
+        .navbar-nav .nav-link,
+        .navbar-nav .nav-link:hover,
+        .navbar form .btn {
+          color: #FFEBD3 !important;
+        }
+        .navbar-nav .nav-link:hover { opacity: 0.85; }
+        .navbar-nav .nav-link.active {
+          color: #FFEBD3 !important;
+          border-bottom: 2px solid #FFB6A6;
+        }
+        .navbar small.nav-text { color: #FFEBD3 !important; opacity: 0.75; }
+
+        /* ── Navbar logo size ── */
+        .navbar-brand img { height: 40px; width: auto; }
+
+        /* ── Page title ── */
+        .page-header { border-bottom: none !important; }
+
+        /* ── Sidebar TOC ── */
+        .sidebar .nav-link,
+        .sidebar a,
+        #toc a,
+        #toc .nav-link {
+          color: #23475C !important;
+        }
+        .sidebar .nav-link:hover,
+        .sidebar a:hover,
+        #toc a:hover {
+          color: #67A2C5 !important;
+        }
+        .sidebar .nav-link.active,
+        #toc .nav-link.active {
+          color: #67A2C5 !important;
+          border-left: 2px solid #9BCEC1;
+          font-weight: 600;
+        }
+
+        /* ── text-muted ── */
+        .text-muted { color: #3D6E8C !important; }
+
+        /* ── Sidebar border ── */
+        .sidebar { border-left: 3px solid #9BCEC1; padding-left: 1rem; }
+
+        /* ── Reference index section headers ── */
+        .reference-index h2 {
+          color: #67A2C5;
+          font-size: 0.8rem;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+        }
+
+        /* ── Inline code ── */
+        code {
+          color: #23475C;
+          background: #E3F2EC;
+          border-radius: 4px;
+          padding: 0.1em 0.35em;
+        }
+
+        /* ── Links ── */
+        a { color: #23475C; }
+        a:hover { color: #67A2C5; }
+
+        /* ── Footer ── */
+        .footer { background: #23475C; color: #FFEBD3; padding: 1.5rem 0; }
+        .footer a { color: #FFEBD3; opacity: 0.85; }
+        .footer a:hover { opacity: 1; }
+
+        /* ── Search ── */
+        #search-input { border-color: #9BCEC1; }
+
+        /* ── Buttons ── */
+        .btn-primary {
+          background-color: #67A2C5 !important;
+          border-color: #67A2C5 !important;
+          color: #FFEBD3 !important;
+        }
+        .btn-primary:hover {
+          background-color: #23475C !important;
+          border-color: #23475C !important;
+        }
+      </style>
+
+home:
+  title: "Rtractor — Complexity and nonlinear time series analysis for R"
+  description: >
+    A staging- and signal-agnostic toolkit of complex systems measures for
+    physiological time series: entropy, fractal and multifractal analysis,
+    recurrence quantification analysis, with Lyapunov exponents and
+    multiscale metrics in progress. Wraps established C/C++/Fortran
+    reference implementations wherever possible, to preserve numerical
+    parity with the original methods literature. Part of the Circadia Lab
+    R ecosystem at Northumbria University.
+  links:
+  - text: Circadia Lab
+    href: https://circadia-lab.uk
+  sidebar:
+    structure: [links, license, community, citation, authors, dev]
+
+navbar:
+  structure:
+    left:  [reference, news]
+    right: [search, github]
+  components:
+    github:
+      icon: fab fa-github
+      href: https://github.com/circadia-bio/Rtractor
+      aria-label: GitHub
+
+reference:
+- title: "Fractal & multifractal analysis"
+  desc: "Scaling exponents and multifractal spectra."
+  contents:
+  - dfa
+  - higuchi_fd
+  - mfdma
+  - chhabra_jensen
+
+- title: "Nonlinear time-domain features"
+  desc: "Fast complexity/roughness descriptors, centralised from mrpheus."
+  contents:
+  - petrosian_fd
+  - hjorth_parameters
+  - num_zerocross
+
+- title: "Entropy"
+  desc: "Information-theoretic complexity measures."
+  contents:
+  - perm_entropy
+
+- title: "Recurrence quantification analysis (RQA)"
+  desc: "Recurrence-based complexity and parameter-selection methods."
+  contents:
+  - recurrence_microstate_entropy
+
+- title: "Colour palette & theme"
+  desc: "Shared Rtractor visual identity for ggplot2 figures."
+  contents:
+  - rtractor_palette
+  - rtractor_palettes
+  - starts_with("scale_")
+  - theme_rtractor
+
+- title: "Package"
+  desc: "Package-level documentation."
+  contents:
+  - Rtractor-package
+
+news:
+  releases:
+  - text: "Changelog"
+    href: news/index.html
+
+authors:
+  Lucas França:
+    href: https://orcid.org/0000-0003-0853-1319
+  Mario Leocadio-Miguel:
+    href: https://orcid.org/0000-0002-7248-3529
+
+footer:
+  structure:
+    left:  [package, developed_by]
+    right: [built_with]
+  components:
+    package: >
+      **Rtractor** — Circadia Lab, Northumbria University.
+    developed_by: >
+      Lucas França & Mario Leocadio-Miguel.
