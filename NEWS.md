@@ -1,5 +1,17 @@
 ## Rtractor 0.0.0.9000
 
+### 🧭 Ported from mrpheus
+
+* Added `perm_entropy()`, `petrosian_fd()`, `hjorth_parameters()`, and
+  `num_zerocross()` — four nonlinear/complexity features centralised
+  from Lucas França's own `mrpheus` package (its AASM staging feature
+  pipeline, itself a validated R/C++ port of the YASA/antropy Python
+  feature set). Re-validated directly against antropy 0.2.2 during this
+  port (exact match for three; near-exact for `hjorth_parameters`, a
+  floating-point summation-order artifact). Rtractor's existing
+  `higuchi_fd()` was cross-checked against mrpheus/antropy's version and
+  found to agree exactly for realistic epoch lengths.
+
 ### 🌿 Fractal family
 
 * Added `dfa()` — Detrended Fluctuation Analysis. Direct C++ port of

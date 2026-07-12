@@ -324,6 +324,89 @@ chhabra_jensen <- function(x,
   )
 }
 
+#' Petrosian Fractal Dimension
+#'
+#' Estimates fractal dimension from the rate of sign changes in a time
+#' series' first difference (a fast proxy for signal irregularity).
+#' Ported from Lucas Franca's own `mrpheus` package (AASM staging feature
+#' pipeline), itself validated for exact parity against the `antropy`
+#' Python library; re-validated here directly against `antropy` 0.2.2 on
+#' synthetic test data (exact match). See `inst/COPYRIGHTS`.
+#'
+#' @param x Numeric vector. The time series to analyse.
+#'
+#' @return A length-1 numeric: the Petrosian fractal dimension.
+#'
+#' @references
+#' Petrosian A. Kolmogorov complexity of finite sequences and recognition
+#' of different preictal EEG patterns. Proceedings of the Eighth IEEE
+#' Symposium on Computer-Based Medical Systems 1995:212-217.
+#'
+#' @examples
+#' set.seed(1)
+#' petrosian_fd(rnorm(1000))
+#'
+#' @export
+petrosian_fd <- function(x) {
+  if (!is.numeric(x)) stop("`x` must be numeric.", call. = FALSE)
+  petrosian_fd_cpp(as.double(x))
+}
+
+#' Hjorth Mobility and Complexity
+#'
+#' Computes the Hjorth parameters (Hjorth 1970): mobility, a proxy for mean
+#' frequency derived from the variance ratio of the first difference to
+#' the signal itself; and complexity, a proxy for bandwidth/irregularity
+#' derived from the second difference. Ported from Lucas Franca's own
+#' `mrpheus` package (AASM staging feature pipeline), itself validated for
+#' exact parity against the `antropy` Python library; re-validated here
+#' directly against `antropy` 0.2.2 on synthetic test data (near-exact
+#' match; residual difference is floating-point summation-order noise).
+#' See `inst/COPYRIGHTS`.
+#'
+#' @param x Numeric vector. The time series to analyse.
+#'
+#' @return A named list with `mobility` and `complexity`.
+#'
+#' @references
+#' Hjorth B. EEG analysis based on time domain properties.
+#' Electroencephalogr Clin Neurophysiol 1970;29(3):306-310.
+#'
+#' @examples
+#' set.seed(1)
+#' hjorth_parameters(rnorm(1000))
+#'
+#' @export
+hjorth_parameters <- function(x) {
+  if (!is.numeric(x)) stop("`x` must be numeric.", call. = FALSE)
+  res <- hjorth_cpp(as.double(x))
+  list(mobility = unname(res["mobility"]), complexity = unname(res["complexity"]))
+}
+
+#' Number of Zero Crossings
+#'
+#' Counts sign changes in a time series -- a simple time-domain proxy for
+#' dominant frequency / signal roughness, commonly reported alongside
+#' Hjorth parameters and fractal dimension in EEG complexity work. Ported
+#' from Lucas Franca's own `mrpheus` package (AASM staging feature
+#' pipeline), itself validated for exact parity against the `antropy`
+#' Python library; re-validated here directly against `antropy` 0.2.2 on
+#' synthetic test data (exact match). See `inst/COPYRIGHTS`.
+#'
+#' @param x Numeric vector. The time series to analyse.
+#'
+#' @return A length-1 integer: the number of zero crossings.
+#'
+#' @examples
+#' set.seed(1)
+#' num_zerocross(rnorm(1000))
+#'
+#' @export
+num_zerocross <- function(x) {
+  if (!is.numeric(x)) stop("`x` must be numeric.", call. = FALSE)
+  num_zerocross_cpp(as.double(x))
+}
+
 # ---- Planned, not yet implemented -----------------------------------------
 #
 #   - box_counting_fd()      Box-counting fractal dimension

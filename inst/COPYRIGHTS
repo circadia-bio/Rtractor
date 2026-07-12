@@ -5,6 +5,47 @@ This file records the provenance of reference implementations wrapped or
 ported into Rtractor, per the terms of their original licenses.
 
 --------------------------------------------------------------------------
+src/entropy.cpp (perm_entropy) and src/fractal_nonlinear.cpp
+(petrosian_fd, hjorth_parameters, num_zerocross)  (ported from Lucas
+Franca's own mrpheus package — same author, no licensing conflict)
+--------------------------------------------------------------------------
+These four functions were originally implemented in mrpheus's
+src/staging_features.cpp as part of its AASM sleep-staging feature
+pipeline (a faithful R/C++ port of the YASA/antropy Python feature set;
+see mrpheus's own NEWS.md and staging_features.R header for that
+parity-validation history). Centralised here so mrpheus (and other
+ecosystem packages) can eventually depend on Rtractor for these general-
+purpose complexity measures rather than maintaining private duplicates,
+per the ecosystem's "wrap, don't reimplement" and isolation principles.
+
+Re-validated directly against the antropy Python library (v0.2.2) on
+synthetic test data during this port:
+  - perm_entropy: exact match
+  - petrosian_fd: exact match
+  - num_zerocross: exact match
+  - hjorth_parameters: near-exact match (residual difference is
+    floating-point summation-order noise, not algorithmic)
+
+Note: Rtractor's higuchi_fd() (see the Higuchi entry above) was
+independently ported from a different MATLAB reference, and was found
+to agree exactly with mrpheus/antropy's higuchi_fd for realistic epoch
+lengths (kmax << length(x)); the two only diverge in the edge case where
+kmax approaches length(x), so no reconciliation was needed.
+
+References:
+  Bandt C, Pompe B. Permutation entropy: a natural complexity measure
+  for time series. Phys Rev Lett 2002;88:174102.
+
+  Petrosian A. Kolmogorov complexity of finite sequences and recognition
+  of different preictal EEG patterns. Proceedings of the Eighth IEEE
+  Symposium on Computer-Based Medical Systems 1995:212-217.
+
+  Hjorth B. EEG analysis based on time domain properties.
+  Electroencephalogr Clin Neurophysiol 1970;29(3):306-310.
+
+  Vallat R, Walker MP. An open-source, high-performance tool for
+  automated sleep staging. eLife 2021;10:e70092.
+--------------------------------------------------------------------------
 src/dfa.cpp  (direct C++ port — wraps GPL-licensed reference code)
 --------------------------------------------------------------------------
 Ported from dfa.c, distributed by PhysioNet.
