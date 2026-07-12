@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="700" viewBox="0 0 680 700" role="img">
+  <title>Rtractor</title>
+  <desc>Hex sticker for the Rtractor R package: white background with a light blue dot grid recalling dotted paper, a dense woven steel-blue and sage strange-attractor motif, thick ink border with a coral accent line, and Rtractor title.</desc>
+
+  <defs>
+    <clipPath id="hexclip">
+      <polygon points="340,30 610,190 610,510 340,670 70,510 70,190"/>
+    </clipPath>
+    <pattern id="dotgrid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="12" cy="12" r="1.6" fill="#9DC1D6" opacity="0.55"/>
+    </pattern>
+  </defs>
+
+  <polygon points="340,30 610,190 610,510 340,670 70,510 70,190" fill="#FFFFFF" clip-path="url(#hexclip)"/>
+  <rect x="70" y="30" width="540" height="640" fill="url(#dotgrid)" clip-path="url(#hexclip)"/>
+
+  <g clip-path="url(#hexclip)">
+    <ellipse cx="285" cy="325" rx="150" ry="94" transform="rotate(-34 285 325)" fill="none" stroke="#67A2C5" stroke-width="4"/>
+    <ellipse cx="285" cy="325" rx="143" ry="90" transform="rotate(-32 285 325)" fill="none" stroke="#9BCEC1" stroke-width="3.8"/>
+    <ellipse cx="285" cy="325" rx="136" ry="85" transform="rotate(-30 285 325)" fill="none" stroke="#67A2C5" stroke-width="3.7"/>
+    <ellipse cx="285" cy="325" rx="128" ry="80" transform="rotate(-27 285 325)" fill="none" stroke="#9BCEC1" stroke-width="3.5"/>
+    <ellipse cx="285" cy="325" rx="121" ry="76" transform="rotate(-25 285 325)" fill="none" stroke="#67A2C5" stroke-width="3.4"/>
+    <ellipse cx="285" cy="325" rx="114" ry="72" transform="rotate(-23 285 325)" fill="none" stroke="#9BCEC1" stroke-width="3.2"/>
+    <ellipse cx="285" cy="325" rx="107" ry="67" transform="rotate(-21 285 325)" fill="none" stroke="#67A2C5" stroke-width="3.1"/>
+    <ellipse cx="285" cy="325" rx="99"  ry="62" transform="rotate(-19 285 325)" fill="none" stroke="#9BCEC1" stroke-width="2.9"/>
+    <ellipse cx="285" cy="325" rx="92"  ry="58" transform="rotate(-16 285 325)" fill="none" stroke="#67A2C5" stroke-width="2.7"/>
+    <ellipse cx="285" cy="325" rx="85"  ry="53" transform="rotate(-14 285 325)" fill="none" stroke="#9BCEC1" stroke-width="2.6"/>
+    <ellipse cx="285" cy="325" rx="78"  ry="49" transform="rotate(-12 285 325)" fill="none" stroke="#67A2C5" stroke-width="2.4"/>
+    <ellipse cx="285" cy="325" rx="70"  ry="44" transform="rotate(-10 285 325)" fill="none" stroke="#9BCEC1" stroke-width="2.3"/>
+    <ellipse cx="285" cy="325" rx="63"  ry="40" transform="rotate(-8  285 325)" fill="none" stroke="#67A2C5" stroke-width="2.1"/>
+    <ellipse cx="285" cy="325" rx="56"  ry="35" transform="rotate(-5  285 325)" fill="none" stroke="#9BCEC1" stroke-width="2.0"/>
+    <ellipse cx="285" cy="325" rx="49"  ry="31" transform="rotate(-3  285 325)" fill="none" stroke="#67A2C5" stroke-width="1.8"/>
+    <ellipse cx="285" cy="325" rx="41"  ry="26" transform="rotate(-1  285 325)" fill="none" stroke="#9BCEC1" stroke-width="1.6"/>
+    <ellipse cx="285" cy="325" rx="34"  ry="21" transform="rotate(1   285 325)" fill="none" stroke="#67A2C5" stroke-width="1.5"/>
+    <ellipse cx="285" cy="325" rx="27"  ry="17" transform="rotate(3   285 325)" fill="none" stroke="#9BCEC1" stroke-width="1.3"/>
+    <ellipse cx="285" cy="325" rx="20"  ry="13" transform="rotate(6   285 325)" fill="none" stroke="#67A2C5" stroke-width="1.2"/>
+    <ellipse cx="285" cy="325" rx="12"  ry="8"  transform="rotate(8   285 325)" fill="none" stroke="#9BCEC1" stroke-width="1.0"/>
+
+    <ellipse cx="405" cy="345" rx="128" ry="81" transform="rotate(28 405 345)" fill="none" stroke="#67A2C5" stroke-width="3.8" opacity="0.92"/>
+    <ellipse cx="405" cy="345" rx="122" ry="77" transform="rotate(26 405 345)" fill="none" stroke="#9BCEC1" stroke-width="3.7" opacity="0.92"/>
+    <ellipse cx="405" cy="345" rx="116" ry="74" transform="rotate(23 405 345)" fill="none" stroke="#67A2C5" stroke-width="3.5" opacity="0.92"/>
+    <ellipse cx="405" cy="345" rx="109" ry="69" transform="rotate(21 405 345)" fill="none" stroke="#9BCEC1" stroke-width="3.4" opacity="0.92"/>
+    <ellipse cx="405" cy="345" rx="103" ry="65" transform="rotate(19 405 345)" fill="none" stroke="#67A2C5" stroke-width="3.2" opacity="0.92"/>
+    <ellipse cx="405" cy="345" rx="97"  ry="62" transform="rotate(16 405 345)" fill="none" stroke="#9BCEC1" stroke-width="3.1" opacity="0.92"/>
+    <ellipse cx="405" cy="345" rx="91"  ry="58" transform="rotate(14 405 345)" fill="none" stroke="#67A2C5" stroke-width="2.9" opacity="0.92"/>
+    <ellipse cx="405" cy="345" rx="85"  ry="54" transform="rotate(12 405 345)" fill="none" stroke="#9BCEC1" stroke-width="2.8" opacity="0.92"/>
+    <ellipse cx="405" cy="345" rx="78"  ry="50" transform="rotate(10 405 345)" fill="none" stroke="#67A2C5" stroke-width="2.7" opacity="0.92"/>
+    <ellipse cx="405" cy="345" rx="72"  ry="46" transform="rotate(7   405 345)" fill="none" stroke="#9BCEC1" stroke-width="2.5" opacity="0.92"/>
+    <ellipse cx="405" cy="345" rx="66"  ry="42" transform="rotate(5   405 345)" fill="none" stroke="#67A2C5" stroke-width="2.4" opacity="0.92"/>
+    <ellipse cx="405" cy="345" rx="60"  ry="38" transform="rotate(3   405 345)" fill="none" stroke="#9BCEC1" stroke-width="2.2" opacity="0.92"/>
+    <ellipse cx="405" cy="345" rx="54"  ry="34" transform="rotate(0   405 345)" fill="none" stroke="#67A2C5" stroke-width="2.1" opacity="0.92"/>
+    <ellipse cx="405" cy="345" rx="47"  ry="30" transform="rotate(-2  405 345)" fill="none" stroke="#9BCEC1" stroke-width="1.9" opacity="0.92"/>
+    <ellipse cx="405" cy="345" rx="41"  ry="26" transform="rotate(-4  405 345)" fill="none" stroke="#67A2C5" stroke-width="1.8" opacity="0.92"/>
+    <ellipse cx="405" cy="345" rx="35"  ry="22" transform="rotate(-7  405 345)" fill="none" stroke="#9BCEC1" stroke-width="1.7" opacity="0.92"/>
+    <ellipse cx="405" cy="345" rx="29"  ry="18" transform="rotate(-9  405 345)" fill="none" stroke="#67A2C5" stroke-width="1.5" opacity="0.92"/>
+    <ellipse cx="405" cy="345" rx="23"  ry="15" transform="rotate(-11 405 345)" fill="none" stroke="#9BCEC1" stroke-width="1.4" opacity="0.92"/>
+    <ellipse cx="405" cy="345" rx="16"  ry="10" transform="rotate(-14 405 345)" fill="none" stroke="#67A2C5" stroke-width="1.2" opacity="0.92"/>
+    <ellipse cx="405" cy="345" rx="10"  ry="6"  transform="rotate(-16 405 345)" fill="none" stroke="#9BCEC1" stroke-width="1.1" opacity="0.92"/>
+
+    <circle cx="514" cy="364" r="7" fill="#FFB6A6"/>
+  </g>
+
+  <text x="201" y="536" text-anchor="start" font-family="'DM Sans','Helvetica Neue',sans-serif" font-size="62" font-weight="700" fill="#23475C" letter-spacing="-1">Rtractor</text>
+  <text x="201" y="536" text-anchor="start" font-family="'DM Sans','Helvetica Neue',sans-serif" font-size="62" font-weight="700" fill="#FFB6A6" letter-spacing="-1">R</text>
+
+  <polygon points="340,30 610,190 610,510 340,670 70,510 70,190" fill="none" stroke="#23475C" stroke-width="22"/>
+  <polygon points="340,30 610,190 610,510 340,670 70,510 70,190" fill="none" stroke="#FFB6A6" stroke-width="5"/>
+</svg>
