@@ -175,6 +175,12 @@ reference:
   desc: "Information-theoretic complexity measures."
   contents:
   - perm_entropy
+  - sample_entropy
+
+- title: "Multiscale"
+  desc: "Complexity measures across a range of temporal scales."
+  contents:
+  - multiscale_entropy
 
 - title: "Recurrence quantification analysis (RQA)"
   desc: "Recurrence-based complexity and parameter-selection methods."
