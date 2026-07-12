@@ -1,6 +1,6 @@
 # 🧪 Rtractor <img src="man/figures/logo.svg" align="right" height="140"/>
 
-**Complexity and nonlinear time series analysis for physiological signals — entropy, fractal/multifractal measures, Lyapunov exponents, multiscale metrics, and recurrence quantification analysis, wrapping established C/C++/Fortran reference implementations.**
+**Complexity and nonlinear time series analysis for physiological signals — entropy, fractal/multifractal measures, Lyapunov exponents, multiscale metrics, and recurrence quantification analysis.**
 
 [![r-universe](https://circadia-bio.r-universe.dev/badges/Rtractor)](https://circadia-bio.r-universe.dev/Rtractor)
 [![License: GPL (>= 2)](https://img.shields.io/badge/License-GPL%20(%3E%3D%202)-blue.svg)](./LICENSE)
