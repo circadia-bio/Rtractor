@@ -6,6 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Rtractor — Complexity and nonlinear time series analysis for R • Rtractor</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" sizes="any" href="favicon.ico">
+<link rel="manifest" href="site.webmanifest">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/DM_Sans-0.4.10/font.css" rel="stylesheet">
@@ -17,6 +22,7 @@
 ">
 <meta property="og:description" content="A staging- and signal-agnostic toolkit of complex systems measures for physiological time series: entropy, fractal and multifractal analysis, recurrence quantification analysis, with Lyapunov exponents and multiscale metrics in progress. Wraps established C/C++/Fortran reference implementations wherever possible, to preserve numerical parity with the original methods literature. Part of the Circadia Lab R ecosystem at Northumbria University.
 ">
+<meta property="og:image" content="https://rtractor.circadia-lab.uk/logo.svg">
 <meta name="theme-color" content="#23475C">
 <style>
   /* ── Navbar ── */
@@ -116,7 +122,7 @@
 
     <a class="navbar-brand me-2" href="index.html">Rtractor</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,6 +133,16 @@
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="articles/getting-started.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/getting-started.html">Getting started with Rtractor</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Articles</h6></li>
+    <li><a class="dropdown-item" href="articles/multifractal-methods.html">Multifractal methods: MFDMA vs Chhabra-Jensen</a></li>
+    <li><a class="dropdown-item" href="articles/entropy-and-complexity.html">Entropy and multiscale complexity</a></li>
+  </ul>
+</li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-news" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">News</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-news">
@@ -150,9 +166,16 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="test_tube-rtractor">🧪 Rtractor<a class="anchor" aria-label="anchor" href="#test_tube-rtractor"></a>
-</h1></div>
-<p><strong>Complexity and nonlinear time series analysis for physiological signals — entropy, fractal/multifractal measures, Lyapunov exponents, multiscale metrics, and recurrence quantification analysis, wrapping established C/C++/Fortran reference implementations.</strong> <a href="./LICENSE"><img src="https://img.shields.io/badge/License-GPL%20(%3E%3D%202)-blue.svg" alt="License: GPL (&gt;= 2)"></a> <a href="https://www.r-project.org/" class="external-link"><img src="https://img.shields.io/badge/R-%3E%3D4.1.0-276DC3.svg" alt="R"></a></p>
+<div class="page-header">
+<img src="logo.svg" class="logo" alt=""><h1 id="test_tube-rtractor-">🧪 Rtractor <a class="anchor" aria-label="anchor" href="#test_tube-rtractor-"></a>
+</h1>
+</div>
+<p><strong>Complexity and nonlinear time series analysis for physiological signals — entropy, fractal/multifractal measures, Lyapunov exponents, multiscale metrics, and recurrence quantification analysis.</strong></p>
+<p><a href="https://circadia-bio.r-universe.dev/Rtractor" class="external-link"><img src="https://circadia-bio.r-universe.dev/badges/Rtractor" alt="r-universe"></a> <a href="./LICENSE"><img src="https://img.shields.io/badge/License-GPL%20(%3E%3D%202)-blue.svg" alt="License: GPL (&gt;= 2)"></a> <a href="https://www.r-project.org/" class="external-link"><img src="https://img.shields.io/badge/R-%3E%3D4.1.0-276DC3.svg" alt="R"></a> <a href="https://github.com/circadia-bio/Rtractor/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/circadia-bio/Rtractor/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R CMD CHECK"></a> <a href="https://github.com/circadia-bio/Rtractor/actions/workflows/pkgdown.yaml" class="external-link"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/circadia-bio/Rtractor/gh-pages/badges/coverage.json" alt="Coverage"></a> <a href="https://github.com/circadia-bio/Rtractor" class="external-link"><img src="https://img.shields.io/badge/status-early%20development-orange" alt="Status"></a> <a href="https://rtractor.circadia-lab.uk"><img src="https://img.shields.io/badge/docs-rtractor.circadia--lab.uk-F0A500" alt="pkgdown"></a></p>
+<hr>
+<blockquote>
+<p>[!WARNING] <strong>Rtractor is in early development and several planned families are not yet implemented</strong> (Lyapunov exponents, phase-space embedding, general recurrence quantification measures). Implemented functions have been validated against reference implementations or ground-truth synthetic data where one exists (see each function’s documentation and <code>inst/COPYRIGHTS</code>), but the package as a whole has not undergone peer review and the API may change without notice. Verify outputs independently before using in any research context.</p>
+</blockquote>
 <hr>
 <div class="section level2">
 <h2 id="open_book-what-is-rtractor">📖 What is Rtractor?<a class="anchor" aria-label="anchor" href="#open_book-what-is-rtractor"></a>
@@ -174,7 +197,7 @@
 <li>🎨 A dedicated Rtractor colour palette, ggplot2 scales, and <code><a href="reference/theme_rtractor.html">theme_rtractor()</a></code>
 </li>
 </ul>
-<p>None of the Lyapunov or multiscale metric functions are implemented yet. Currently working: <code><a href="reference/dfa.html">dfa()</a></code>, <code><a href="reference/higuchi_fd.html">higuchi_fd()</a></code>, <code><a href="reference/mfdma.html">mfdma()</a></code>, <code><a href="reference/chhabra_jensen.html">chhabra_jensen()</a></code>, <code><a href="reference/petrosian_fd.html">petrosian_fd()</a></code>, <code><a href="reference/hjorth_parameters.html">hjorth_parameters()</a></code>, <code><a href="reference/num_zerocross.html">num_zerocross()</a></code> (fractal family), <code><a href="reference/perm_entropy.html">perm_entropy()</a></code> (entropy family), and <code><a href="reference/recurrence_microstate_entropy.html">recurrence_microstate_entropy()</a></code> (RQA family). See <code>NEWS.md</code> for progress.</p>
+<p>None of the Lyapunov metric functions are implemented yet. Currently working: <code><a href="reference/dfa.html">dfa()</a></code>, <code><a href="reference/higuchi_fd.html">higuchi_fd()</a></code>, <code><a href="reference/mfdma.html">mfdma()</a></code>, <code><a href="reference/chhabra_jensen.html">chhabra_jensen()</a></code>, <code><a href="reference/petrosian_fd.html">petrosian_fd()</a></code>, <code><a href="reference/hjorth_parameters.html">hjorth_parameters()</a></code>, <code><a href="reference/num_zerocross.html">num_zerocross()</a></code> (fractal family), <code><a href="reference/perm_entropy.html">perm_entropy()</a></code>, <code><a href="reference/sample_entropy.html">sample_entropy()</a></code> (entropy family), <code><a href="reference/multiscale_entropy.html">multiscale_entropy()</a></code> (multiscale family), <code><a href="reference/recurrence_microstate_entropy.html">recurrence_microstate_entropy()</a></code> (RQA family), and <code><a href="reference/pmodel.html">pmodel()</a></code> (simulate family, for generating synthetic test signals). See <code>NEWS.md</code> for progress.</p>
 </div>
 <div class="section level2">
 <h2 id="card_index_dividers-project-structure">🗂️ Project Structure<a class="anchor" aria-label="anchor" href="#card_index_dividers-project-structure"></a>
@@ -182,13 +205,14 @@
 <pre><code>Rtractor/
 ├── R/
 │   ├── Rtractor-package.R   # package-level doc / Rcpp registration
-│   ├── entropy.R            # perm_entropy(); planned: sample/approx entropy
+│   ├── entropy.R            # perm_entropy(), sample_entropy()
 │   ├── fractal.R            # dfa(), higuchi_fd(), mfdma(), chhabra_jensen(),
 │   │                       # petrosian_fd(), hjorth_parameters(), num_zerocross()
 │   ├── lyapunov.R           # planned: Rosenstein/Wolf
-│   ├── multiscale.R         # planned: MSE, RCMSE
+│   ├── multiscale.R         # multiscale_entropy(); planned: RCMSE
 │   ├── rqa.R                # recurrence_microstate_entropy(); planned: RQA measures
 │   ├── embed.R              # planned: phase-space reconstruction utils
+│   ├── simulate.R           # pmodel() -- synthetic multifractal test signals
 │   ├── palettes.R           # rtractor_palette(), rtractor_palettes()
 │   ├── scales.R             # scale_{colour,fill}_rtractor(_c)()
 │   └── theme.R              # theme_rtractor()
@@ -198,9 +222,14 @@
 │   ├── fractal_multifractal.cpp  # MFDMA, Chhabra-Jensen — clean-room
 │   ├── fractal_nonlinear.cpp     # Petrosian FD, Hjorth, zero-crossings — from mrpheus
 │   ├── entropy.cpp          # Permutation entropy — from mrpheus
+│   ├── sample_entropy.cpp   # Sample/multiscale entropy — wraps PhysioNet's mse.c (GPL-2+)
 │   └── microstates.cpp      # Recurrence microstates entropy — wraps MIT code
 ├── inst/
 │   └── COPYRIGHTS           # attribution for wrapped/ported reference code
+├── vignettes/
+│   ├── getting-started.Rmd       # tour of every implemented family
+│   ├── multifractal-methods.Rmd  # mfdma() vs chhabra_jensen(), validated against pmodel() ground truth
+│   └── entropy-and-complexity.Rmd  # perm_entropy/sample_entropy/multiscale_entropy, white noise vs correlated signal
 ├── tests/testthat/
 ├── man/
 ├── DESCRIPTION

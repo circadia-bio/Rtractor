@@ -1,8 +1,10 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://rtractor.circadia-lab.uk/404.html</loc></url>
 <url><loc>https://rtractor.circadia-lab.uk/LICENSE.html</loc></url>
+<url><loc>https://rtractor.circadia-lab.uk/articles/entropy-and-complexity.html</loc></url>
 <url><loc>https://rtractor.circadia-lab.uk/articles/getting-started.html</loc></url>
 <url><loc>https://rtractor.circadia-lab.uk/articles/index.html</loc></url>
+<url><loc>https://rtractor.circadia-lab.uk/articles/multifractal-methods.html</loc></url>
 <url><loc>https://rtractor.circadia-lab.uk/authors.html</loc></url>
 <url><loc>https://rtractor.circadia-lab.uk/index.html</loc></url>
 <url><loc>https://rtractor.circadia-lab.uk/news/index.html</loc></url>
@@ -15,12 +17,15 @@
 <url><loc>https://rtractor.circadia-lab.uk/reference/hjorth_parameters.html</loc></url>
 <url><loc>https://rtractor.circadia-lab.uk/reference/index.html</loc></url>
 <url><loc>https://rtractor.circadia-lab.uk/reference/mfdma.html</loc></url>
+<url><loc>https://rtractor.circadia-lab.uk/reference/multiscale_entropy.html</loc></url>
 <url><loc>https://rtractor.circadia-lab.uk/reference/num_zerocross.html</loc></url>
 <url><loc>https://rtractor.circadia-lab.uk/reference/perm_entropy.html</loc></url>
 <url><loc>https://rtractor.circadia-lab.uk/reference/petrosian_fd.html</loc></url>
+<url><loc>https://rtractor.circadia-lab.uk/reference/pmodel.html</loc></url>
 <url><loc>https://rtractor.circadia-lab.uk/reference/recurrence_microstate_entropy.html</loc></url>
 <url><loc>https://rtractor.circadia-lab.uk/reference/rtractor_palette.html</loc></url>
 <url><loc>https://rtractor.circadia-lab.uk/reference/rtractor_palettes.html</loc></url>
+<url><loc>https://rtractor.circadia-lab.uk/reference/sample_entropy.html</loc></url>
 <url><loc>https://rtractor.circadia-lab.uk/reference/scale_colour_rtractor.html</loc></url>
 <url><loc>https://rtractor.circadia-lab.uk/reference/scale_colour_rtractor_c.html</loc></url>
 <url><loc>https://rtractor.circadia-lab.uk/reference/scale_fill_rtractor.html</loc></url>

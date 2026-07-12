@@ -15,12 +15,12 @@ Source:
 
 França L, Leocadio-Miguel M (2026). *Rtractor: Complexity and Nonlinear
 Time Series Analysis for Physiological Signals*. R package version
-0.0.0.9000, <https://rtractor.circadia-lab.uk>.
+0.1.0, <https://rtractor.circadia-lab.uk>.
 
     @Manual{,
       title = {Rtractor: Complexity and Nonlinear Time Series Analysis for Physiological Signals},
       author = {Lucas França and Mario Leocadio-Miguel},
       year = {2026},
-      note = {R package version 0.0.0.9000},
+      note = {R package version 0.1.0},
       url = {https://rtractor.circadia-lab.uk},
     }

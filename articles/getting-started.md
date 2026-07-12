@@ -186,6 +186,27 @@ White noise has near-maximal permutation entropy (every ordinal pattern
 is close to equally likely); the smooth periodic signal has much lower
 entropy (a small number of patterns dominate).
 
+[`sample_entropy()`](https://rtractor.circadia-lab.uk/reference/sample_entropy.md)
+estimates complexity via template matching (Richman & Moorman 2000): the
+negative log ratio of matches of length `m + 1` to matches of length
+`m`, within a fixed Chebyshev-distance tolerance:
+
+``` r
+
+sample_entropy(white_noise)
+#> [1] 2.477142
+sample_entropy(smooth_signal)
+#> [1] 0.09699926
+```
+
+See
+[`vignette("entropy-and-complexity")`](https://rtractor.circadia-lab.uk/articles/entropy-and-complexity.md)
+for a deeper dive into both, plus
+[`multiscale_entropy()`](https://rtractor.circadia-lab.uk/reference/multiscale_entropy.md)
+(the MSE family), including the classic Costa et al. demonstration of
+why coarse-graining across scales reveals complexity that a single-scale
+measure misses.
+
 ## Recurrence quantification analysis (RQA)
 
 [`recurrence_microstate_entropy()`](https://rtractor.circadia-lab.uk/reference/recurrence_microstate_entropy.md)
@@ -310,6 +331,37 @@ recurrence_microstate_entropy(windowed_signal, seed = 1)
 #> [1] 0.19624
 ```
 
+## Simulating test signals
+
+[`pmodel()`](https://rtractor.circadia-lab.uk/reference/pmodel.md)
+generates a multiplicative binomial cascade (Meneveau & Sreenivasan
+1987) with known, controllable multifractal properties – useful for
+testing and demonstrating the multifractal estimators above, since it
+gives you *known ground truth* rather than just a plausible- looking
+synthetic series. The `p` parameter directly controls how multifractal
+the output is: values near `0.5` are essentially monofractal, values far
+from `0.5` are strongly multifractal (`p = 0.5` gives an exactly
+constant series):
+
+``` r
+
+y_calm   <- pmodel(2048, p = 0.48, seed = 1)
+y_strong <- pmodel(2048, p = 0.1,  seed = 1)
+
+range(y_calm)
+#> [1] 0.6382393 1.5394541
+range(y_strong)
+#> [1] 2.048000e-08 6.426841e+02
+```
+
+See
+[`vignette("multifractal-methods")`](https://rtractor.circadia-lab.uk/articles/multifractal-methods.md)
+for how this is used to validate
+[`mfdma()`](https://rtractor.circadia-lab.uk/reference/mfdma.md) and
+[`chhabra_jensen()`](https://rtractor.circadia-lab.uk/reference/chhabra_jensen.md)
+against known ground truth, rather than just checking they run without
+error.
+
 ## Colour palette & theme
 
 Rtractor ships its own colour palette and `ggplot2` theme, visually
@@ -351,9 +403,6 @@ Several planned families aren’t implemented yet:
 
 - **Lyapunov exponents** (`R/lyapunov.R`) – Rosenstein and Wolf methods
   for the largest Lyapunov exponent.
-- **Multiscale metrics** (`R/multiscale.R`) – multiscale entropy and
-  refined composite multiscale entropy, built on the entropy family
-  applied at each coarse-grained scale.
 - **General RQA measures** (`R/rqa.R`) – the recurrence matrix itself
   and its derived quantifiers (determinism, laminarity, recurrence rate,
   trapping time).

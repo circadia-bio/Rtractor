@@ -1,6 +1,35 @@
 # Changelog
 
-## Rtractor 0.0.0.9000
+## Rtractor 0.1.0 (2026-07)
+
+### 📉 Multiscale family
+
+- Added
+  [`multiscale_entropy()`](https://rtractor.circadia-lab.uk/reference/multiscale_entropy.md)
+  — multiscale entropy (MSE; Costa, Goldberger & Peng 2002), the first
+  function in the previously-empty multiscale family. Direct C++ port of
+  the counting core in PhysioNet’s reference `mse.c` (Costa), validated
+  to reproduce the compiled reference binary’s output exactly (to its
+  own displayed precision) on synthetic test data, both at the
+  sample-entropy level and for the full multiscale sweep.
+- Added
+  [`sample_entropy()`](https://rtractor.circadia-lab.uk/reference/sample_entropy.md)
+  — sample entropy (SampEn; Richman & Moorman 2000), filling a
+  previously-planned gap in the entropy family and serving as the
+  building block
+  [`multiscale_entropy()`](https://rtractor.circadia-lab.uk/reference/multiscale_entropy.md)
+  applies at each coarse-grained scale.
+
+### 🎲 Simulate family
+
+- Added
+  [`pmodel()`](https://rtractor.circadia-lab.uk/reference/pmodel.md) —
+  multifractal binomial cascade generator (Meneveau & Sreenivasan 1987),
+  with optional Fourier-domain fractional integration (Davis et
+  al. 1997). Clean-room R reimplementation of `pmodel.m` (Victor
+  Venema). Validated against two RNG-independent structural properties:
+  exact constant output at p=0.5, and exact mass conservation at every
+  cascade level for any p.
 
 ### 🧭 Ported from mrpheus
 
@@ -79,3 +108,33 @@
 - Planned function families stubbed as file headers only (no
   implementations yet, pending reference code inventory): `entropy`,
   `fractal`, `lyapunov`, `multiscale`, `rqa`, `embed`.
+
+### 🎨 Visual identity
+
+- Hex sticker logo (`man/figures/logo.svg`), matching the Circadia Lab
+  ecosystem’s visual conventions: a dense woven strange-attractor motif
+  (a nod to “Rtractor” = R + attractor) on a dotted-paper background,
+  with the Rtractor colour palette carried through the border and
+  wordmark. Wordmark baked as vector outlines rather than live text, so
+  it renders correctly regardless of font availability in whatever tool
+  processes the SVG (favicon generators, etc.).
+- pkgdown site live at <https://rtractor.circadia-lab.uk>, with the full
+  favicon set generated via
+  [`pkgdown::build_favicons()`](https://pkgdown.r-lib.org/reference/build_favicons.html).
+
+### 📚 Documentation
+
+- [`vignette("getting-started")`](https://rtractor.circadia-lab.uk/articles/getting-started.md)
+  — tour of every implemented family.
+- [`vignette("multifractal-methods")`](https://rtractor.circadia-lab.uk/articles/multifractal-methods.md)
+  — [`mfdma()`](https://rtractor.circadia-lab.uk/reference/mfdma.md) vs
+  [`chhabra_jensen()`](https://rtractor.circadia-lab.uk/reference/chhabra_jensen.md),
+  validated against known
+  [`pmodel()`](https://rtractor.circadia-lab.uk/reference/pmodel.md)
+  ground truth rather than just checking both run without error.
+- [`vignette("entropy-and-complexity")`](https://rtractor.circadia-lab.uk/articles/entropy-and-complexity.md)
+  —
+  [`perm_entropy()`](https://rtractor.circadia-lab.uk/reference/perm_entropy.md)/
+  [`sample_entropy()`](https://rtractor.circadia-lab.uk/reference/sample_entropy.md)/[`multiscale_entropy()`](https://rtractor.circadia-lab.uk/reference/multiscale_entropy.md),
+  including the classic Costa et al. white-noise-vs-correlated-signal
+  multiscale entropy demonstration.

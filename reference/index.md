@@ -30,6 +30,15 @@ Information-theoretic complexity measures.
 
 - [`perm_entropy()`](https://rtractor.circadia-lab.uk/reference/perm_entropy.md)
   : Permutation Entropy
+- [`sample_entropy()`](https://rtractor.circadia-lab.uk/reference/sample_entropy.md)
+  : Sample Entropy (SampEn)
+
+## Multiscale
+
+Complexity measures across a range of temporal scales.
+
+- [`multiscale_entropy()`](https://rtractor.circadia-lab.uk/reference/multiscale_entropy.md)
+  : Multiscale Entropy (MSE)
 
 ## Recurrence quantification analysis (RQA)
 
@@ -37,6 +46,14 @@ Recurrence-based complexity and parameter-selection methods.
 
 - [`recurrence_microstate_entropy()`](https://rtractor.circadia-lab.uk/reference/recurrence_microstate_entropy.md)
   : Recurrence Microstates Entropy (maximum-entropy threshold search)
+
+## Simulate synthetic test signals
+
+Generators with known/controllable fractal properties, for testing and
+demonstrating the measurement functions above.
+
+- [`pmodel()`](https://rtractor.circadia-lab.uk/reference/pmodel.md) :
+  Simulate a Multifractal Time Series Using the p-Model
 
 ## Colour palette & theme
 

@@ -2,11 +2,28 @@
 
 **Complexity and nonlinear time series analysis for physiological
 signals — entropy, fractal/multifractal measures, Lyapunov exponents,
-multiscale metrics, and recurrence quantification analysis, wrapping
-established C/C++/Fortran reference implementations.** [![License: GPL
-(\>=
+multiscale metrics, and recurrence quantification analysis.**
+
+[![r-universe](https://circadia-bio.r-universe.dev/badges/Rtractor)](https://circadia-bio.r-universe.dev/Rtractor)
+[![License: GPL (\>=
 2)](https://img.shields.io/badge/License-GPL%20(%3E%3D%202)-blue.svg)](https://rtractor.circadia-lab.uk/LICENSE)
 [![R](https://img.shields.io/badge/R-%3E%3D4.1.0-276DC3.svg)](https://www.r-project.org/)
+[![R CMD
+CHECK](https://github.com/circadia-bio/Rtractor/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/circadia-bio/Rtractor/actions/workflows/R-CMD-check.yaml)
+[![Coverage](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/circadia-bio/Rtractor/gh-pages/badges/coverage.json)](https://github.com/circadia-bio/Rtractor/actions/workflows/pkgdown.yaml)
+[![Status](https://img.shields.io/badge/status-early%20development-orange)](https://github.com/circadia-bio/Rtractor)
+[![pkgdown](https://img.shields.io/badge/docs-rtractor.circadia--lab.uk-F0A500)](https://rtractor.circadia-lab.uk)
+
+------------------------------------------------------------------------
+
+> \[!WARNING\] **Rtractor is in early development and several planned
+> families are not yet implemented** (Lyapunov exponents, phase-space
+> embedding, general recurrence quantification measures). Implemented
+> functions have been validated against reference implementations or
+> ground-truth synthetic data where one exists (see each function’s
+> documentation and `inst/COPYRIGHTS`), but the package as a whole has
+> not undergone peer review and the API may change without notice.
+> Verify outputs independently before using in any research context.
 
 ------------------------------------------------------------------------
 
@@ -45,9 +62,8 @@ methods literature.
 - 🎨 A dedicated Rtractor colour palette, ggplot2 scales, and
   [`theme_rtractor()`](https://rtractor.circadia-lab.uk/reference/theme_rtractor.md)
 
-None of the Lyapunov or multiscale metric functions are implemented yet.
-Currently working:
-[`dfa()`](https://rtractor.circadia-lab.uk/reference/dfa.md),
+None of the Lyapunov metric functions are implemented yet. Currently
+working: [`dfa()`](https://rtractor.circadia-lab.uk/reference/dfa.md),
 [`higuchi_fd()`](https://rtractor.circadia-lab.uk/reference/higuchi_fd.md),
 [`mfdma()`](https://rtractor.circadia-lab.uk/reference/mfdma.md),
 [`chhabra_jensen()`](https://rtractor.circadia-lab.uk/reference/chhabra_jensen.md),
@@ -55,23 +71,30 @@ Currently working:
 [`hjorth_parameters()`](https://rtractor.circadia-lab.uk/reference/hjorth_parameters.md),
 [`num_zerocross()`](https://rtractor.circadia-lab.uk/reference/num_zerocross.md)
 (fractal family),
-[`perm_entropy()`](https://rtractor.circadia-lab.uk/reference/perm_entropy.md)
-(entropy family), and
+[`perm_entropy()`](https://rtractor.circadia-lab.uk/reference/perm_entropy.md),
+[`sample_entropy()`](https://rtractor.circadia-lab.uk/reference/sample_entropy.md)
+(entropy family),
+[`multiscale_entropy()`](https://rtractor.circadia-lab.uk/reference/multiscale_entropy.md)
+(multiscale family),
 [`recurrence_microstate_entropy()`](https://rtractor.circadia-lab.uk/reference/recurrence_microstate_entropy.md)
-(RQA family). See `NEWS.md` for progress.
+(RQA family), and
+[`pmodel()`](https://rtractor.circadia-lab.uk/reference/pmodel.md)
+(simulate family, for generating synthetic test signals). See `NEWS.md`
+for progress.
 
 ## 🗂️ Project Structure
 
     Rtractor/
     ├── R/
     │   ├── Rtractor-package.R   # package-level doc / Rcpp registration
-    │   ├── entropy.R            # perm_entropy(); planned: sample/approx entropy
+    │   ├── entropy.R            # perm_entropy(), sample_entropy()
     │   ├── fractal.R            # dfa(), higuchi_fd(), mfdma(), chhabra_jensen(),
     │   │                       # petrosian_fd(), hjorth_parameters(), num_zerocross()
     │   ├── lyapunov.R           # planned: Rosenstein/Wolf
-    │   ├── multiscale.R         # planned: MSE, RCMSE
+    │   ├── multiscale.R         # multiscale_entropy(); planned: RCMSE
     │   ├── rqa.R                # recurrence_microstate_entropy(); planned: RQA measures
     │   ├── embed.R              # planned: phase-space reconstruction utils
+    │   ├── simulate.R           # pmodel() -- synthetic multifractal test signals
     │   ├── palettes.R           # rtractor_palette(), rtractor_palettes()
     │   ├── scales.R             # scale_{colour,fill}_rtractor(_c)()
     │   └── theme.R              # theme_rtractor()
@@ -81,9 +104,14 @@ Currently working:
     │   ├── fractal_multifractal.cpp  # MFDMA, Chhabra-Jensen — clean-room
     │   ├── fractal_nonlinear.cpp     # Petrosian FD, Hjorth, zero-crossings — from mrpheus
     │   ├── entropy.cpp          # Permutation entropy — from mrpheus
+    │   ├── sample_entropy.cpp   # Sample/multiscale entropy — wraps PhysioNet's mse.c (GPL-2+)
     │   └── microstates.cpp      # Recurrence microstates entropy — wraps MIT code
     ├── inst/
     │   └── COPYRIGHTS           # attribution for wrapped/ported reference code
+    ├── vignettes/
+    │   ├── getting-started.Rmd       # tour of every implemented family
+    │   ├── multifractal-methods.Rmd  # mfdma() vs chhabra_jensen(), validated against pmodel() ground truth
+    │   └── entropy-and-complexity.Rmd  # perm_entropy/sample_entropy/multiscale_entropy, white noise vs correlated signal
     ├── tests/testthat/
     ├── man/
     ├── DESCRIPTION
