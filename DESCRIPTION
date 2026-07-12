@@ -1,6 +1,6 @@
 Package: Rtractor
 Title: Complexity and Nonlinear Time Series Analysis for Physiological Signals
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: c(
     person("Lucas", "França",
            email = "lucas.franca@northumbria.ac.uk",

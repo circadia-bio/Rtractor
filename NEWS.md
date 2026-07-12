@@ -1,4 +1,4 @@
-## Rtractor 0.0.0.9000
+## Rtractor 0.1.0  (2026-07)
 
 ### 📉 Multiscale family
 
@@ -81,3 +81,26 @@
 * Planned function families stubbed as file headers only (no
   implementations yet, pending reference code inventory): `entropy`,
   `fractal`, `lyapunov`, `multiscale`, `rqa`, `embed`.
+
+### 🎨 Visual identity
+
+* Hex sticker logo (`man/figures/logo.svg`), matching the Circadia Lab
+  ecosystem's visual conventions: a dense woven strange-attractor motif
+  (a nod to "Rtractor" = R + attractor) on a dotted-paper background,
+  with the Rtractor colour palette carried through the border and
+  wordmark. Wordmark baked as vector outlines rather than live text, so
+  it renders correctly regardless of font availability in whatever tool
+  processes the SVG (favicon generators, etc.).
+* pkgdown site live at <https://rtractor.circadia-lab.uk>, with the full
+  favicon set generated via `pkgdown::build_favicons()`.
+
+### 📚 Documentation
+
+* `vignette("getting-started")` — tour of every implemented family.
+* `vignette("multifractal-methods")` — `mfdma()` vs `chhabra_jensen()`,
+  validated against known `pmodel()` ground truth rather than just
+  checking both run without error.
+* `vignette("entropy-and-complexity")` — `perm_entropy()`/
+  `sample_entropy()`/`multiscale_entropy()`, including the classic Costa
+  et al. white-noise-vs-correlated-signal multiscale entropy
+  demonstration.
