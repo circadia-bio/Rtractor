@@ -44,7 +44,7 @@ things get more interesting, and where the difference between "random" and
 
 `sample_entropy()` (Richman & Moorman 2000) compares every pair of
 length-`m` templates in the series (excluding self-matches) within a fixed
-Chebyshev-distance tolerance `r * sd(x)`, then does the same for length
+Chebyshev-distance tolerance `sd(x) * r`, then does the same for length
 `m + 1`, and reports `-log(matches at m+1 / matches at m)`. A series that's
 mostly unpredictable has few long matches relative to short ones, so
 `sample_entropy()` is high; a very regular series keeps matching, so it's
@@ -143,8 +143,8 @@ work.
 
 ## Choosing `m` and `r`
 
-Both `sample_entropy()` and `multiscale_entropy()` default to `m = 2`,
-`r = 0.15` -- the standard convention from Costa et al.'s original MSE
+Both `sample_entropy()` and `multiscale_entropy()` default to `m` = `2`,
+`r` = `0.15` -- the standard convention from Costa et al.'s original MSE
 papers, and a reasonable starting point for most physiological time series.
 `m` is the template length being compared; `r` is the tolerance as a
 fraction of the series' own standard deviation. Larger `r` tolerates more
