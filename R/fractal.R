@@ -105,17 +105,227 @@ higuchi_fd <- function(x, k_max = 10L) {
   list(k = k, L = L, hfd = hfd)
 }
 
+#' Multifractal Detrending Moving Average (MFDMA)
+#'
+#' Estimates the multifractal scaling properties of a time series using
+#' the detrending moving average algorithm (Gu & Zhou 2010). Clean-room
+#' C++ reimplementation from the published algorithm (the reference
+#' MATLAB implementation consulted, `MFDMA_1D.m`, had no license header;
+#' see `inst/COPYRIGHTS`). The segment-fluctuation core was validated
+#' against a Python transliteration of that reference on synthetic test
+#' data (exact match to displayed precision).
+#'
+#' @param x Numeric vector. The time series to analyse.
+#' @param n_min,n_max Integer. Lower/upper bound of the segment size `n`.
+#'   Following the reference implementation's guidance: `n_min` around
+#'   `10`; `n_max` around 10% of `length(x)`. Defaults: `n_min = 10`,
+#'   `n_max = round(length(x) / 10)`.
+#' @param n_scales Integer. Number of segment sizes to evaluate
+#'   (log-spaced between `n_min` and `n_max`). Default `30`.
+#' @param theta Numeric in `[0, 1]`. Position of the moving-average window:
+#'   `0` (default, recommended) = backward MFDMA, `0.5` = centered,
+#'   `1` = forward.
+#' @param q Numeric vector. Multifractal orders to evaluate. Default
+#'   `seq(-4, 4, by = 0.1)`.
+#'
+#' @return A list with:
+#'   \item{n}{Segment sizes evaluated.}
+#'   \item{Fq}{Matrix of the q-th order fluctuation function (segment size
+#'     x q).}
+#'   \item{tau}{Multifractal scaling exponent tau(q).}
+#'   \item{alpha}{Singularity strength alpha(q) (trimmed at both ends by
+#'     the local-slope smoothing window; shorter than `q`).}
+#'   \item{f}{Multifractal spectrum f(alpha).}
+#'   \item{q}{The `q` values corresponding to `alpha`/`f` (trimmed to match).}
+#'
+#' @references
+#' Gu GF, Zhou WX. Detrending moving average algorithm for multifractals.
+#' Phys Rev E 2010;82:011136.
+#'
+#' @examples
+#' set.seed(1)
+#' x <- rnorm(4000)
+#' res <- mfdma(x, n_min = 10, n_max = 400, n_scales = 20)
+#' plot(res$alpha, res$f, type = "b")
+#'
+#' @export
+mfdma <- function(x, n_min = 10L, n_max = NULL, n_scales = 30L, theta = 0,
+                   q = seq(-4, 4, by = 0.1)) {
+  if (!is.numeric(x)) stop("`x` must be numeric.", call. = FALSE)
+  x <- as.double(x)
+  M <- length(x)
+  if (is.null(n_max)) n_max <- round(M / 10)
+  n_min <- as.integer(n_min)
+  n_max <- as.integer(n_max)
+  if (n_min < 2L) stop("`n_min` must be >= 2.", call. = FALSE)
+  if (n_max <= n_min) stop("`n_max` must be greater than `n_min`.", call. = FALSE)
+  if (theta < 0 || theta > 1) stop("`theta` must be in [0, 1].", call. = FALSE)
+
+  scales <- unique(as.integer(round(
+    10^seq(log10(n_min), log10(n_max), length.out = n_scales)
+  )))
+
+  y <- cumsum(x)
+  F_list <- mfdma_fluctuations_cpp(y, scales, theta)
+
+  n_q <- length(q)
+  n_scales_actual <- length(scales)
+  Fq <- matrix(NA_real_, nrow = n_scales_actual, ncol = n_q)
+  for (j in seq_len(n_scales_actual)) {
+    f <- F_list[[j]]
+    f <- f[is.finite(f) & f > 0]
+    if (length(f) == 0L) next
+    for (i in seq_len(n_q)) {
+      qi <- q[i]
+      Fq[j, i] <- if (qi == 0) {
+        exp(0.5 * mean(log(f^2)))
+      } else {
+        (mean(f^qi))^(1 / qi)
+      }
+    }
+  }
+
+  logn <- log(scales)
+  h <- vapply(seq_len(n_q), function(i) {
+    fq_col <- Fq[, i]
+    ok <- is.finite(fq_col) & fq_col > 0
+    if (sum(ok) < 2L) return(NA_real_)
+    unname(stats::coef(stats::lm(log(fq_col[ok]) ~ logn[ok]))[2])
+  }, numeric(1))
+  tau <- h * q - 1
+
+  dx <- (7L - 1L) %/% 2L
+  n_tau <- length(tau)
+  if (n_tau <= 2L * dx) {
+    stop("`q` must have more than ", 2L * dx, " values for the alpha/f smoothing window.", call. = FALSE)
+  }
+  alpha <- rep(NA_real_, n_tau)
+  for (i in (dx + 1L):(n_tau - dx)) {
+    idx <- (i - dx):(i + dx)
+    alpha[i] <- unname(stats::coef(stats::lm(tau[idx] ~ q[idx]))[2])
+  }
+  keep <- (dx + 1L):(n_tau - dx)
+  alpha_trim <- alpha[keep]
+  tau_trim <- tau[keep]
+  q_trim <- q[keep]
+  f_spectrum <- q_trim * alpha_trim - tau_trim
+
+  list(n = scales, Fq = Fq, tau = tau, alpha = alpha_trim, f = f_spectrum, q = q_trim)
+}
+
+#' Multifractal Spectrum via the Chhabra-Jensen Method
+#'
+#' Estimates the multifractal spectrum f(alpha) and generalised dimension
+#' spectrum D(q) of a strictly positive time series using the direct
+#' box-counting method of Chhabra & Jensen (1989). Clean-room C++
+#' reimplementation from the published algorithm (the reference MATLAB
+#' implementation consulted, `ChhabraJensen_Yuj_w0.m`, co-authored by
+#' L. Franca, had no license header; see `inst/COPYRIGHTS`). The moments
+#' core was validated against a Python transliteration of that reference
+#' on synthetic test data (exact match to displayed precision).
+#'
+#' @param x Numeric vector, strictly positive (treat it as a measure —
+#'   e.g. apply a sigmoid transform first if your data can be negative).
+#'   `length(x)` must be evenly divisible by `2^scale` for every value in
+#'   `scales`, i.e. dyadic lengths (powers of two) work best.
+#' @param q_values Numeric vector of multifractal orders. Per the original
+#'   author's guidance, values strictly between 0 and 1 (exclusive) are
+#'   numerically unstable for this method and best avoided -- a warning is
+#'   issued if any are supplied. Default skips that range:
+#'   `c(seq(-10, -0.1, by = 0.1), seq(1, 10, by = 0.1))`.
+#' @param scales Integer vector of box-counting scale exponents; the box
+#'   size at each scale is `2^scale`. Default `1:floor(log2(length(x)) - 2)`,
+#'   which keeps at least 4 points per box at the coarsest scale.
+#'
+#' @return A list with:
+#'   \item{alpha}{Singularity strength alpha(q).}
+#'   \item{falpha}{Multifractal spectrum f(alpha(q)).}
+#'   \item{Dq}{Generalised dimension spectrum D(q).}
+#'   \item{r_squared_alpha, r_squared_falpha, r_squared_Dq}{R-squared of
+#'     the linear fit underlying each of the above, per `q` -- inspect
+#'     these before trusting a given q value's estimate.}
+#'   \item{q}{The `q_values` used.}
+#'   \item{mu_scale, Ma, Mf, Md}{The underlying regression inputs, included
+#'     for completeness.}
+#'
+#' @references
+#' Chhabra A, Jensen RV. Direct determination of the f(alpha) singularity
+#' spectrum. Phys Rev Lett 1989;62:1327-1330.
+#'
+#' @examples
+#' set.seed(1)
+#' x <- abs(rnorm(1024)) + 0.01
+#' res <- chhabra_jensen(x, scales = 1:6)
+#' plot(res$alpha, res$falpha, type = "b")
+#'
+#' @export
+chhabra_jensen <- function(x,
+                           q_values = c(seq(-10, -0.1, by = 0.1), seq(1, 10, by = 0.1)),
+                           scales = NULL) {
+  if (!is.numeric(x)) stop("`x` must be numeric.", call. = FALSE)
+  if (any(x <= 0)) {
+    stop("`x` must be strictly positive; consider a sigmoid transform first.", call. = FALSE)
+  }
+  if (any(q_values > 0 & q_values < 1)) {
+    warning("Some `q_values` fall strictly between 0 and 1; this method is numerically unstable there (per the original author's guidance).", call. = FALSE)
+  }
+
+  x <- as.double(x)
+  L <- length(x)
+  if (is.null(scales)) scales <- seq_len(max(1L, floor(log2(L)) - 2L))
+  scales <- as.integer(scales)
+
+  for (s in scales) {
+    window <- 2^s
+    if (L %% window != 0) {
+      stop(sprintf(
+        "length(x) (%d) is not divisible by 2^%d = %d; choose `scales` that evenly divide length(x).",
+        L, s, window
+      ), call. = FALSE)
+    }
+  }
+
+  moments <- chhabra_jensen_moments_cpp(x, as.double(q_values), scales)
+  Ma <- moments$Ma
+  Mf <- moments$Mf
+  Md <- moments$Md
+
+  mu_scale <- -log10(2^scales)
+  nq <- length(q_values)
+
+  alpha <- numeric(nq)
+  falpha <- numeric(nq)
+  Dq <- numeric(nq)
+  r2_alpha <- numeric(nq)
+  r2_falpha <- numeric(nq)
+  r2_Dq <- numeric(nq)
+
+  for (i in seq_len(nq)) {
+    fit_a <- stats::lm(Ma[i, ] ~ mu_scale)
+    fit_f <- stats::lm(Mf[i, ] ~ mu_scale)
+    fit_d <- stats::lm(Md[i, ] ~ mu_scale)
+
+    alpha[i]  <- unname(stats::coef(fit_a)[2])
+    falpha[i] <- unname(stats::coef(fit_f)[2])
+    b_md      <- unname(stats::coef(fit_d)[2])
+
+    q <- q_values[i]
+    Dq[i] <- if (q > 0 && q <= 1) b_md else b_md / (q - 1)
+
+    r2_alpha[i]  <- summary(fit_a)$r.squared
+    r2_falpha[i] <- summary(fit_f)$r.squared
+    r2_Dq[i]     <- summary(fit_d)$r.squared
+  }
+
+  list(
+    alpha = alpha, falpha = falpha, Dq = Dq,
+    r_squared_alpha = r2_alpha, r_squared_falpha = r2_falpha, r_squared_Dq = r2_Dq,
+    q = q_values, mu_scale = mu_scale, Ma = Ma, Mf = Mf, Md = Md
+  )
+}
+
 # ---- Planned, not yet implemented -----------------------------------------
 #
 #   - box_counting_fd()      Box-counting fractal dimension
-#   - mfdma()                Multifractal detrending moving average
-#                            (reference: MFDMA_1D.m — no license header
-#                            present; candidate for clean-room
-#                            reimplementation)
-#   - chhabra_jensen()       Multifractal spectrum via the Chhabra-Jensen
-#                            method (reference: ChhabraJensen_Yuj_w0.m,
-#                            co-authored by L. França — no license header
-#                            present; candidate for clean-room
-#                            reimplementation)
 #
-# Native counterpart(s) expected in: src/fractal.cpp (for mfdma/chhabra_jensen)
+# Native counterpart(s) expected in: src/fractal.cpp (for box_counting_fd)

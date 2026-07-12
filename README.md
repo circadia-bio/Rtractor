@@ -39,8 +39,9 @@ literature.
   `theme_rtractor()`
 
 None of the Lyapunov or multiscale metric functions are implemented yet.
-Currently working: `dfa()`, `higuchi_fd()` (fractal family) and
-`recurrence_microstate_entropy()` (RQA family). See `NEWS.md` for progress.
+Currently working: `dfa()`, `higuchi_fd()`, `mfdma()`, `chhabra_jensen()`
+(fractal family) and `recurrence_microstate_entropy()` (RQA family).
+See `NEWS.md` for progress.
 
 ## 🗂️ Project Structure
 
@@ -49,7 +50,7 @@ Rtractor/
 ├── R/
 │   ├── Rtractor-package.R   # package-level doc / Rcpp registration
 │   ├── entropy.R            # planned: sample/approx/permutation entropy
-│   ├── fractal.R            # dfa(), higuchi_fd(); planned: mfdma, chhabra_jensen
+│   ├── fractal.R            # dfa(), higuchi_fd(), mfdma(), chhabra_jensen()
 │   ├── lyapunov.R           # planned: Rosenstein/Wolf
 │   ├── multiscale.R         # planned: MSE, RCMSE
 │   ├── rqa.R                # recurrence_microstate_entropy(); planned: RQA measures
@@ -60,6 +61,7 @@ Rtractor/
 ├── src/
 │   ├── dfa.cpp              # DFA — wraps PhysioNet's dfa.c (GPL-2+)
 │   ├── higuchi.cpp          # Higuchi FD — clean-room reimplementation
+│   ├── fractal_multifractal.cpp  # MFDMA, Chhabra-Jensen — clean-room
 │   └── microstates.cpp      # Recurrence microstates entropy — wraps MIT code
 ├── inst/
 │   └── COPYRIGHTS           # attribution for wrapped/ported reference code

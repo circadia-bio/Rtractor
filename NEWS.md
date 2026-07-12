@@ -11,8 +11,15 @@
   reimplementation from Higuchi (1988), validated against a MATLAB
   reference implementation on synthetic test data (max abs. difference
   ~1e-11).
-* `mfdma()` and `chhabra_jensen()` (multifractal spectrum) reference
-  MATLAB sources received but not yet ported — pending.
+* Added `mfdma()` — multifractal detrending moving average (Gu & Zhou
+  2010). Clean-room C++ reimplementation from the published algorithm,
+  segment-fluctuation core validated against a Python transliteration of
+  the reference MATLAB implementation on synthetic test data (exact
+  match to displayed precision).
+* Added `chhabra_jensen()` — multifractal spectrum via the Chhabra-Jensen
+  box-counting method (1989). Clean-room C++ reimplementation, moments
+  core validated against a Python transliteration of the reference
+  implementation (exact match to displayed precision).
 
 ### 🔁 RQA family
 

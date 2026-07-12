@@ -83,10 +83,29 @@ transliteration of the original on synthetic test data (exact match on
 S_max and eps_max given identical sampled index pairs).
 
 --------------------------------------------------------------------------
-Pending: MFDMA (multifractal detrending moving average) and the
-Chhabra-Jensen multifractal spectrum estimator — reference MATLAB
-sources received (MFDMA_1D.m; ChhabraJensen_Yuj_w0.m, co-authored by
-L. França), not yet ported. No license headers present in either source
-file; both are candidates for clean-room reimplementation from the
-published algorithms rather than direct translation, pending review.
+src/fractal_multifractal.cpp (mfdma)  (clean-room reimplementation from
+the published algorithm — not a translation of licensed source)
+--------------------------------------------------------------------------
+Algorithm: Gu GF, Zhou WX. Detrending moving average algorithm for
+multifractals. Phys Rev E 2010;82:011136.
+
+A MATLAB reference implementation was consulted during development
+(MFDMA_1D.m; no license header present in the source file). The segment-
+fluctuation core was validated against a Python transliteration of that
+reference on synthetic test data (exact match to displayed precision).
+
+--------------------------------------------------------------------------
+src/fractal_multifractal.cpp (chhabra_jensen)  (clean-room
+reimplementation from the published algorithm — not a translation of
+licensed source)
+--------------------------------------------------------------------------
+Algorithm: Chhabra A, Jensen RV. Direct determination of the f(alpha)
+singularity spectrum. Phys Rev Lett 1989;62:1327-1330.
+
+A MATLAB reference implementation was consulted during development
+(ChhabraJensen_Yuj_w0.m, originally written by J. G. V. Miranda, modified
+by L. G. S. Franca and Yujiang Wang; no license header present in the
+source file). The moments core was validated against a Python
+transliteration of that reference on synthetic test data (exact match to
+displayed precision).
 --------------------------------------------------------------------------
