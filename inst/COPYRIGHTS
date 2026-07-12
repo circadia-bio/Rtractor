@@ -5,6 +5,44 @@ This file records the provenance of reference implementations wrapped or
 ported into Rtractor, per the terms of their original licenses.
 
 --------------------------------------------------------------------------
+R/simulate.R (pmodel)  (clean-room reimplementation from the published
+algorithm — not a translation of licensed source)
+--------------------------------------------------------------------------
+Algorithm: Meneveau C, Sreenivasan KR. Simple multifractal cascade model
+for fully developed turbulence. Phys Rev Lett 1987;59:1424-1427.
+
+Fractional integration step: Davis A, Marshak A, Cahalan R, Wiscombe W.
+The Landsat scale break in stratocumulus as a three-dimensional radiative
+transfer effect: implications for cloud remote sensing. J Atmos Sci
+1997;54(2):241-260.
+
+A MATLAB reference implementation was consulted during development
+(pmodel.m, written by the late Victor Venema, first version 25 January
+2006; no license header present in the source file). Venema requested
+the following citation be used when citing this code:
+
+  Venema V, Bachner S, Rust HW, Simmer C. Statistical characteristics of
+  surrogate data based on geophysical measurements. Nonlin Processes
+  Geophys 2006;13:449-466.
+
+The original implementation reseeds its RNG to a fixed seed (42) at
+every cascade level unconditionally, making its output fully
+deterministic by design. This port preserves that same reseed-every-
+level structure using R's own RNG rather than attempting to replicate
+MATLAB's specific generator bit-for-bit (not feasible across languages,
+and not meaningful for a synthetic-data generator characterised by its
+cascade rule rather than particular RNG bytes).
+
+Validated against two structural properties that hold regardless of
+which RNG produced the random sign draws:
+  - at p = 0.5, the cascade recursion is provably an exact constant
+    vector of 1s (the random sign is multiplied by (1 - 2*0.5) = 0)
+  - total mass is conserved exactly at every cascade level (sum(y)
+    doubles per level) for any p, since child1 + child2 = 2*y for any
+    sign value
+Both were confirmed directly (in R, not just derived analytically) —
+see tests/testthat/test-pmodel.R.
+--------------------------------------------------------------------------
 src/entropy.cpp (perm_entropy) and src/fractal_nonlinear.cpp
 (petrosian_fd, hjorth_parameters, num_zerocross)  (ported from Lucas
 Franca's own mrpheus package — same author, no licensing conflict)

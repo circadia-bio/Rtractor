@@ -181,6 +181,12 @@ reference:
   contents:
   - recurrence_microstate_entropy
 
+- title: "Simulate synthetic test signals"
+  desc: "Generators with known/controllable fractal properties, for
+    testing and demonstrating the measurement functions above."
+  contents:
+  - pmodel
+
 - title: "Colour palette & theme"
   desc: "Shared Rtractor visual identity for ggplot2 figures."
   contents:

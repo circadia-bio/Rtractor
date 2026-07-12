@@ -41,8 +41,9 @@ literature.
 None of the Lyapunov or multiscale metric functions are implemented yet.
 Currently working: `dfa()`, `higuchi_fd()`, `mfdma()`, `chhabra_jensen()`,
 `petrosian_fd()`, `hjorth_parameters()`, `num_zerocross()` (fractal
-family), `perm_entropy()` (entropy family), and
-`recurrence_microstate_entropy()` (RQA family). See `NEWS.md` for progress.
+family), `perm_entropy()` (entropy family), `recurrence_microstate_entropy()`
+(RQA family), and `pmodel()` (simulate family, for generating synthetic
+test signals). See `NEWS.md` for progress.
 
 ## 🗂️ Project Structure
 
@@ -57,6 +58,7 @@ Rtractor/
 │   ├── multiscale.R         # planned: MSE, RCMSE
 │   ├── rqa.R                # recurrence_microstate_entropy(); planned: RQA measures
 │   ├── embed.R              # planned: phase-space reconstruction utils
+│   ├── simulate.R           # pmodel() -- synthetic multifractal test signals
 │   ├── palettes.R           # rtractor_palette(), rtractor_palettes()
 │   ├── scales.R             # scale_{colour,fill}_rtractor(_c)()
 │   └── theme.R              # theme_rtractor()

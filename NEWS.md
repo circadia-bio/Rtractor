@@ -1,5 +1,14 @@
 ## Rtractor 0.0.0.9000
 
+### 🎲 Simulate family
+
+* Added `pmodel()` — multifractal binomial cascade generator (Meneveau &
+  Sreenivasan 1987), with optional Fourier-domain fractional integration
+  (Davis et al. 1997). Clean-room R reimplementation of `pmodel.m`
+  (Victor Venema). Validated against two RNG-independent structural
+  properties: exact constant output at p=0.5, and exact mass
+  conservation at every cascade level for any p.
+
 ### 🧭 Ported from mrpheus
 
 * Added `perm_entropy()`, `petrosian_fd()`, `hjorth_parameters()`, and
