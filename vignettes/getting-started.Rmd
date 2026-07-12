@@ -1,0 +1,235 @@
+---
+title: "Getting started with Rtractor"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started with Rtractor}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse   = TRUE,
+  comment    = "#>",
+  fig.width  = 7,
+  fig.height = 4,
+  dpi        = 150,
+  out.width  = "100%"
+)
+has_ggplot2 <- requireNamespace("ggplot2", quietly = TRUE)
+```
+
+```{r packages, message = FALSE}
+library(Rtractor)
+```
+
+## Overview
+
+**Rtractor** is the complexity/statistical-physics layer of the Circadia Lab
+R ecosystem: a shared home for the nonlinear dynamics and complex-systems
+measures (entropy, fractal dimension, multifractal spectra, recurrence
+quantification) that would otherwise get reimplemented piecemeal inside
+signal-specific packages like `mrpheus`, `zeitR`, and `dynR`.
+
+Like the rest of the ecosystem, Rtractor is **signal-agnostic**: every
+function accepts a plain numeric vector regardless of where it came from --
+EEG, actigraphy, BOLD, HRV, or anything else -- rather than assuming a
+specific acquisition modality or staging scheme.
+
+Where a solid reference implementation exists, Rtractor wraps it (via Rcpp)
+rather than re-deriving the algorithm from scratch, to preserve numerical
+parity with the original methods literature. Where no license permits a
+direct wrap, functions are clean-room reimplementations from the published
+algorithm, validated against the reference implementation on synthetic test
+data. See `inst/COPYRIGHTS` for the full provenance of every function.
+
+This article walks through everything currently implemented, organised by
+family. See "What isn't here yet" at the end for what's still in progress.
+
+## Installation
+
+```r
+# install.packages("remotes")
+remotes::install_github("circadia-bio/Rtractor")
+```
+
+## Example data
+
+A couple of synthetic series to work with throughout: white noise (an
+uncorrelated signal, the classic complexity-measures benchmark) and a random
+walk (its cumulative sum, the other classic benchmark).
+
+```{r example-data}
+set.seed(1)
+white_noise <- rnorm(4000)
+random_walk <- cumsum(white_noise)
+```
+
+## Fractal & multifractal analysis
+
+### Detrended Fluctuation Analysis
+
+`dfa()` estimates the scaling exponent alpha of a time series (Peng et al.
+1994). By default it treats `x` as an increment series and integrates it
+internally -- the standard DFA convention -- so white noise gives the
+textbook benchmark of alpha ~ 0.5:
+
+```{r dfa-white-noise}
+dfa(white_noise)$alpha
+```
+
+Feeding a random walk through the same default pipeline amounts to *double*
+integration -- the other classic benchmark, alpha ~ 1.5:
+
+```{r dfa-random-walk}
+dfa(random_walk)$alpha
+```
+
+### Higuchi Fractal Dimension
+
+`higuchi_fd()` estimates fractal dimension from curve length at increasing
+sub-sampling intervals (Higuchi 1988). White noise is space-filling
+(HFD ~ 2); a smooth periodic signal is line-like (HFD ~ 1):
+
+```{r higuchi}
+higuchi_fd(white_noise, k_max = 10)$hfd
+
+smooth_signal <- sin(seq(0, 40 * pi, length.out = 4000))
+higuchi_fd(smooth_signal, k_max = 10)$hfd
+```
+
+### Multifractal Detrending Moving Average (MFDMA)
+
+`mfdma()` extends DFA to a spectrum of scaling exponents across multifractal
+orders `q` (Gu & Zhou 2010), returning the singularity spectrum f(alpha):
+
+```{r mfdma, fig.height = 3.5}
+mf <- mfdma(white_noise, n_min = 10, n_max = 400, n_scales = 20)
+plot(mf$alpha, mf$f, type = "b", xlab = "alpha", ylab = "f(alpha)")
+```
+
+White noise is close to monofractal, so the spectrum collapses to a narrow
+range around alpha ~ 0.5 with f(alpha) peaking near 1.
+
+### Chhabra-Jensen multifractal spectrum
+
+`chhabra_jensen()` estimates the same kind of spectrum via direct
+box-counting (Chhabra & Jensen 1989) rather than detrended fluctuations. It
+needs a strictly positive series with a dyadic (power-of-two-friendly)
+length:
+
+```{r chhabra-jensen, fig.height = 3.5}
+positive_series <- abs(rnorm(1024)) + 0.01
+cj <- chhabra_jensen(positive_series, scales = 1:6)
+plot(cj$alpha, cj$falpha, type = "b", xlab = "alpha", ylab = "f(alpha)")
+```
+
+Each `q` value's `alpha`/`falpha`/`Dq` estimate comes with an R-squared
+(`r_squared_alpha`, `r_squared_falpha`, `r_squared_Dq`) -- worth checking
+before trusting any individual point, especially near the edges of the `q`
+range.
+
+## Nonlinear time-domain features
+
+Three fast, cheap-to-compute descriptors centralised from `mrpheus`'s AASM
+staging feature pipeline (itself a validated port of the `antropy`/YASA
+Python feature set):
+
+```{r nonlinear-features}
+petrosian_fd(white_noise)
+
+hjorth_parameters(white_noise)
+
+num_zerocross(white_noise)
+```
+
+`petrosian_fd()` is a fast proxy for irregularity based on sign changes in
+the first difference. `hjorth_parameters()` returns mobility (a proxy for
+mean frequency) and complexity (a proxy for bandwidth) from variance ratios
+of successive differences -- note this uses Bessel-corrected variance,
+matching R's `var()` convention, which differs slightly from `antropy`'s
+population-variance convention for short series (see `?hjorth_parameters`).
+`num_zerocross()` simply counts sign changes.
+
+## Entropy
+
+`perm_entropy()` estimates complexity from the distribution of ordinal
+patterns in the series (Bandt & Pompe 2002), normalised to `[0, 1]` by
+default:
+
+```{r perm-entropy}
+perm_entropy(white_noise)
+perm_entropy(smooth_signal)
+```
+
+White noise has near-maximal permutation entropy (every ordinal pattern is
+close to equally likely); the smooth periodic signal has much lower entropy
+(a small number of patterns dominate).
+
+## Recurrence quantification analysis (RQA)
+
+`recurrence_microstate_entropy()` implements a parameter-free approach to
+recurrence analysis (Corso et al. 2018): rather than picking a vicinity
+threshold epsilon by hand, it searches for the threshold that *maximises*
+the Shannon entropy of the recurrence microstate distribution.
+
+```{r microstates}
+windowed_signal <- (sin(seq(0, 20 * pi, length.out = 300)) + 1) / 2
+recurrence_microstate_entropy(windowed_signal, seed = 1)
+```
+
+## Colour palette & theme
+
+Rtractor ships its own colour palette and `ggplot2` theme, visually distinct
+from `circadia`'s (softer, more pastel) so figures from each package are
+recognisable at a glance:
+
+```{r palette}
+rtractor_palette()
+rtractor_palette("core")
+```
+
+```{r check-ggplot2, echo = FALSE, results = "asis"}
+if (!has_ggplot2) {
+  cat(
+    "_ggplot2 isn't installed in the environment that built this article, ",
+    "so the plot below is shown but wasn't executed._",
+    sep = ""
+  )
+}
+```
+
+```{r theme-demo, eval = has_ggplot2, message = FALSE}
+library(ggplot2)
+
+mf_df <- data.frame(alpha = mf$alpha, f = mf$f)
+
+ggplot(mf_df, aes(alpha, f)) +
+  geom_point(colour = rtractor_palette("core")[["steel_blue"]], size = 2) +
+  geom_line(colour = rtractor_palette("core")[["steel_blue"]]) +
+  labs(
+    title = "MFDMA singularity spectrum",
+    subtitle = "White noise: close to monofractal",
+    x = expression(alpha), y = expression(f(alpha))
+  ) +
+  theme_rtractor()
+```
+
+## What isn't here yet
+
+Several planned families aren't implemented yet:
+
+- **Lyapunov exponents** (`R/lyapunov.R`) -- Rosenstein and Wolf methods for
+  the largest Lyapunov exponent.
+- **Multiscale metrics** (`R/multiscale.R`) -- multiscale entropy and
+  refined composite multiscale entropy, built on the entropy family applied
+  at each coarse-grained scale.
+- **General RQA measures** (`R/rqa.R`) -- the recurrence matrix itself and
+  its derived quantifiers (determinism, laminarity, recurrence rate,
+  trapping time). `recurrence_microstate_entropy()` is a threshold-selection
+  tool, not a replacement for these.
+- **Phase-space embedding** (`R/embed.R`) -- time-delay embedding, and
+  delay/dimension estimation, needed by the Lyapunov and RQA families above.
+
+See `NEWS.md` for progress, or the package's GitHub repository for the
+current status of reference code for each.
