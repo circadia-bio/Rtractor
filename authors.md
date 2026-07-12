@@ -11,7 +11,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/circadia-bio/Rtractor/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/circadia-bio/Rtractor/blob/v0.1.0/DESCRIPTION)
 
 França L, Leocadio-Miguel M (2026). *Rtractor: Complexity and Nonlinear
 Time Series Analysis for Physiological Signals*. R package version
