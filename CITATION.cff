@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "Rtractor: Complexity and Nonlinear Time Series Analysis for Physiological Signals"
+version: 0.1.0
+doi: 10.5281/zenodo.21328630
+url: "https://github.com/circadia-bio/Rtractor"
+repository-code: "https://github.com/circadia-bio/Rtractor"
+license: "GPL-2.0-or-later"
+authors:
+  - family-names: França
+    given-names: Lucas
+    orcid: "https://orcid.org/0000-0003-0853-1319"
+    affiliation: "Northumbria University, Circadia Lab"
+  - family-names: Leocadio-Miguel
+    given-names: Mario
+    orcid: "https://orcid.org/0000-0002-7248-3529"
+    affiliation: "Northumbria University, Circadia Lab"

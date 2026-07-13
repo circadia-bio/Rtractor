@@ -3,6 +3,7 @@
 **Complexity and nonlinear time series analysis for physiological signals — entropy, fractal/multifractal measures, Lyapunov exponents, multiscale metrics, and recurrence quantification analysis.**
 
 [![r-universe](https://circadia-bio.r-universe.dev/badges/Rtractor)](https://circadia-bio.r-universe.dev/Rtractor)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.21328630-blue)](https://doi.org/10.5281/zenodo.21328630)
 [![License: GPL (>= 2)](https://img.shields.io/badge/License-GPL%20(%3E%3D%202)-blue.svg)](./LICENSE)
 [![R](https://img.shields.io/badge/R-%3E%3D4.1.0-276DC3.svg)](https://www.r-project.org/)
 [![R CMD CHECK](https://github.com/circadia-bio/Rtractor/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/circadia-bio/Rtractor/actions/workflows/R-CMD-check.yaml)
@@ -141,6 +142,21 @@ remotes::install_github("circadia-bio/Rtractor")
 |---|---|---|
 | Author, maintainer | Lucas França | Northumbria University, Circadia Lab |
 | Author | Mario Leocadio-Miguel | Northumbria University, Circadia Lab |
+
+## 📄 Citation
+
+If you use Rtractor in your research, please cite it:
+
+```bibtex
+@software{franca_rtractor_2026,
+  author  = {França, Lucas and Leocadio-Miguel, Mario},
+  title   = {{Rtractor}: Complexity and Nonlinear Time Series Analysis for Physiological Signals},
+  year    = {2026},
+  version = {0.1.0},
+  doi     = {10.5281/zenodo.21328630},
+  url     = {https://github.com/circadia-bio/Rtractor}
+}
+```
 
 ## 🤝 Related Tools
 
