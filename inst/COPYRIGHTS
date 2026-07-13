@@ -5,6 +5,79 @@ This file records the provenance of reference implementations wrapped or
 ported into Rtractor, per the terms of their original licenses.
 
 --------------------------------------------------------------------------
+src/embed.cpp (fnn_fraction_cpp, used by estimate_embed_dim)  (clean-room
+reimplementation from the published algorithm -- not a translation of
+any licensed or specified source)
+--------------------------------------------------------------------------
+Algorithm: Kennel MB, Brown R, Abarbanel HDI. Determining embedding
+dimension for phase-space reconstruction using a geometrical
+construction. Phys Rev A 1992;45:3403-3411.
+
+No reference implementation was specified for this port (asked; no
+preference given), so this was implemented directly from the published
+algorithm description rather than validated against another codebase.
+Sanity-checked structurally only (monotonic decrease of the FNN fraction
+with embedding dimension for a known low-dimensional system), not
+validated against an independent implementation -- treat with more
+caution than the other entries in this file until cross-checked.
+
+--------------------------------------------------------------------------
+R/embed.R (embed_time_series, estimate_delay)  (clean-room
+reimplementations from the published algorithms)
+--------------------------------------------------------------------------
+Algorithms:
+  Takens F. Detecting strange attractors in turbulence. In: Dynamical
+  Systems and Turbulence, Warwick 1980. Lecture Notes in Mathematics,
+  vol 898. Springer; 1981:366-381.
+
+  Fraser AM, Swinney HL. Independent coordinates for strange attractors
+  from mutual information. Phys Rev A 1986;33:1134-1140.
+
+No reference implementation was specified for either function; both are
+straightforward, unambiguous translations of their respective published
+formulas (delay embedding is a direct index construction; mutual
+information is a standard binned-histogram estimator), so parity
+validation against a second implementation was judged unnecessary here,
+unlike the FNN entry above.
+
+--------------------------------------------------------------------------
+src/rqa.cpp (distance_matrix_cpp, rqa_line_stats_cpp) and R/rqa.R
+(recurrence_matrix, rqa_measures)  (clean-room reimplementation from
+published algorithms -- not a translation of any licensed or specified
+source)
+--------------------------------------------------------------------------
+Algorithms:
+  Eckmann JP, Kamphorst SO, Ruelle D. Recurrence plots of dynamical
+  systems. Europhys Lett 1987;4(9):973-977.
+
+  Zbilut JP, Webber CL Jr. Embeddings and delays as derived from
+  quantification of recurrence plots. Phys Lett A 1992;171(3-4):199-203.
+
+  Marwan N, Romano MC, Thiel M, Kurths J. Recurrence plots for the
+  analysis of complex systems. Phys Rep 2007;438(5-6):237-329. (Used as
+  the formula reference for RR/DET/L_mean/L_max/ENTR/LAM/TT, since these
+  are defined consistently this way across major RQA toolboxes --
+  Marwan's own CRP Toolbox, pyRQA, R's crqa/nonlinearTseries.)
+
+No reference implementation was specified for this port (asked; no
+preference given). Two design choices worth flagging explicitly since
+they affect the numbers and aren't fixed by the algorithm alone:
+  - Threshold convention: both fixed-radius and fixed-recurrence-rate
+    (`rr`) thresholding are supported (`recurrence_matrix(radius = ...)`
+    vs `recurrence_matrix(rr = ...)`); fixed-rr uses the empirical
+    quantile of pairwise distances outside the Theiler band, which
+    hits the target rate exactly by construction (no iterative search
+    needed). Default when neither is given: `rr = 0.1`.
+  - Theiler window: default `theiler_window = 1` excludes only the main
+    diagonal (`i == j`) from all rate/line-length calculations; widen
+    this for signals with strong short-range temporal autocorrelation
+    that would otherwise inflate RR/DET with trivial "recurrences".
+Not validated against an independent RQA implementation -- treat with
+more caution than the other entries in this file until cross-checked
+(e.g. against R's own `crqa` or `nonlinearTseries` packages, or
+Marwan's CRP Toolbox, on a shared test signal).
+
+--------------------------------------------------------------------------
 src/sda.cpp (sda)  (ported from Lucas Franca's own legacy `mrug` tool --
 same author, no licensing conflict; DEVIATES from the original code, see
 below)

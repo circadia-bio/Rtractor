@@ -183,9 +183,19 @@ reference:
   contents:
   - multiscale_entropy
 
+- title: "Phase-space embedding"
+  desc: "Reconstruction utilities shared by the RQA (and future Lyapunov)
+    families."
+  contents:
+  - embed_time_series
+  - estimate_delay
+  - estimate_embed_dim
+
 - title: "Recurrence quantification analysis (RQA)"
   desc: "Recurrence-based complexity and parameter-selection methods."
   contents:
+  - recurrence_matrix
+  - rqa_measures
   - recurrence_microstate_entropy
 
 - title: "Simulate synthetic test signals"

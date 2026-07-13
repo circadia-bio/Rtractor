@@ -26,6 +26,22 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// fnn_fraction_cpp
+NumericVector fnn_fraction_cpp(NumericVector x, int tau, IntegerVector dims, double rtol, double atol, int theiler);
+RcppExport SEXP _Rtractor_fnn_fraction_cpp(SEXP xSEXP, SEXP tauSEXP, SEXP dimsSEXP, SEXP rtolSEXP, SEXP atolSEXP, SEXP theilerSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< int >::type tau(tauSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type dims(dimsSEXP);
+    Rcpp::traits::input_parameter< double >::type rtol(rtolSEXP);
+    Rcpp::traits::input_parameter< double >::type atol(atolSEXP);
+    Rcpp::traits::input_parameter< int >::type theiler(theilerSEXP);
+    rcpp_result_gen = Rcpp::wrap(fnn_fraction_cpp(x, tau, dims, rtol, atol, theiler));
+    return rcpp_result_gen;
+END_RCPP
+}
 // perm_entropy_raw_cpp
 double perm_entropy_raw_cpp(NumericVector x, int order, int delay);
 RcppExport SEXP _Rtractor_perm_entropy_raw_cpp(SEXP xSEXP, SEXP orderSEXP, SEXP delaySEXP) {
@@ -128,6 +144,30 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// distance_matrix_cpp
+NumericMatrix distance_matrix_cpp(NumericMatrix traj, int norm_code);
+RcppExport SEXP _Rtractor_distance_matrix_cpp(SEXP trajSEXP, SEXP norm_codeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type traj(trajSEXP);
+    Rcpp::traits::input_parameter< int >::type norm_code(norm_codeSEXP);
+    rcpp_result_gen = Rcpp::wrap(distance_matrix_cpp(traj, norm_code));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rqa_line_stats_cpp
+List rqa_line_stats_cpp(LogicalMatrix R, int theiler_window);
+RcppExport SEXP _Rtractor_rqa_line_stats_cpp(SEXP RSEXP, SEXP theiler_windowSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< LogicalMatrix >::type R(RSEXP);
+    Rcpp::traits::input_parameter< int >::type theiler_window(theiler_windowSEXP);
+    rcpp_result_gen = Rcpp::wrap(rqa_line_stats_cpp(R, theiler_window));
+    return rcpp_result_gen;
+END_RCPP
+}
 // sample_entropy_counts_cpp
 NumericVector sample_entropy_counts_cpp(NumericVector y, int m, double tolerance);
 RcppExport SEXP _Rtractor_sample_entropy_counts_cpp(SEXP ySEXP, SEXP mSEXP, SEXP toleranceSEXP) {
@@ -156,6 +196,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_Rtractor_dfa_cpp", (DL_FUNC) &_Rtractor_dfa_cpp, 6},
+    {"_Rtractor_fnn_fraction_cpp", (DL_FUNC) &_Rtractor_fnn_fraction_cpp, 6},
     {"_Rtractor_perm_entropy_raw_cpp", (DL_FUNC) &_Rtractor_perm_entropy_raw_cpp, 3},
     {"_Rtractor_mfdma_fluctuations_cpp", (DL_FUNC) &_Rtractor_mfdma_fluctuations_cpp, 3},
     {"_Rtractor_chhabra_jensen_moments_cpp", (DL_FUNC) &_Rtractor_chhabra_jensen_moments_cpp, 3},
@@ -164,6 +205,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Rtractor_hjorth_cpp", (DL_FUNC) &_Rtractor_hjorth_cpp, 1},
     {"_Rtractor_higuchi_length_cpp", (DL_FUNC) &_Rtractor_higuchi_length_cpp, 2},
     {"_Rtractor_recurrence_microstate_entropy_cpp", (DL_FUNC) &_Rtractor_recurrence_microstate_entropy_cpp, 8},
+    {"_Rtractor_distance_matrix_cpp", (DL_FUNC) &_Rtractor_distance_matrix_cpp, 2},
+    {"_Rtractor_rqa_line_stats_cpp", (DL_FUNC) &_Rtractor_rqa_line_stats_cpp, 2},
     {"_Rtractor_sample_entropy_counts_cpp", (DL_FUNC) &_Rtractor_sample_entropy_counts_cpp, 3},
     {"_Rtractor_sda_fluctuation_cpp", (DL_FUNC) &_Rtractor_sda_fluctuation_cpp, 2},
     {NULL, NULL, 0}

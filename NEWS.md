@@ -1,5 +1,30 @@
 ## Rtractor 0.1.1  (2026-07)
 
+### 🧭 Embedding family (new)
+
+* Added `embed_time_series()` — time-delay (Takens 1981) phase-space
+  reconstruction.
+* Added `estimate_delay()` — delay `tau` via first local minimum of
+  average mutual information (Fraser & Swinney 1986), with an
+  autocorrelation-based fallback.
+* Added `estimate_embed_dim()` — embedding dimension `m` via false
+  nearest neighbours (Kennel, Brown & Abarbanel 1992).
+  All three are clean-room implementations from the published methods
+  -- no reference implementation was specified for this family. See
+  `inst/COPYRIGHTS`.
+
+### 🔁 RQA family
+
+* Added `recurrence_matrix()` — binary recurrence matrix from a (raw or
+  embedded) time series, supporting both fixed-radius and fixed-
+  recurrence-rate thresholding (Eckmann, Kamphorst & Ruelle 1987).
+* Added `rqa_measures()` — the standard RQA measures computed from a
+  recurrence matrix: RR, DET, L_mean, L_max, ENTR, LAM, TT (Zbilut &
+  Webber 1992; Marwan et al. 2007 conventions). Both are clean-room
+  implementations -- no reference implementation was specified. See
+  `inst/COPYRIGHTS`.
+* `plot_recurrence()` remains planned, not yet implemented.
+
 ### 🌿 Fractal family
 
 * Added `sda()` — Hurst exponent via windowed Root-Mean-Square deviation

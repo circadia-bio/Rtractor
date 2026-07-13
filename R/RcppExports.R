@@ -7,6 +7,11 @@ dfa_cpp <- function(x, nfit = 2L, minbox = 0L, maxbox = 0L, integrate = TRUE, sl
 }
 
 #' @keywords internal
+fnn_fraction_cpp <- function(x, tau, dims, rtol, atol, theiler) {
+    .Call(`_Rtractor_fnn_fraction_cpp`, x, tau, dims, rtol, atol, theiler)
+}
+
+#' @keywords internal
 perm_entropy_raw_cpp <- function(x, order = 3L, delay = 1L) {
     .Call(`_Rtractor_perm_entropy_raw_cpp`, x, order, delay)
 }
@@ -44,6 +49,16 @@ higuchi_length_cpp <- function(serie, kmax) {
 #' @keywords internal
 recurrence_microstate_entropy_cpp <- function(serie, x_idx, y_idx, block, eps_min, eps_max, frac, frac2) {
     .Call(`_Rtractor_recurrence_microstate_entropy_cpp`, serie, x_idx, y_idx, block, eps_min, eps_max, frac, frac2)
+}
+
+#' @keywords internal
+distance_matrix_cpp <- function(traj, norm_code) {
+    .Call(`_Rtractor_distance_matrix_cpp`, traj, norm_code)
+}
+
+#' @keywords internal
+rqa_line_stats_cpp <- function(R, theiler_window) {
+    .Call(`_Rtractor_rqa_line_stats_cpp`, R, theiler_window)
 }
 
 #' @keywords internal
