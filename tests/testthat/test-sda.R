@@ -32,12 +32,21 @@ test_that("sda() distinguishes an uncorrelated series from an integrated (Browni
 })
 
 test_that("sda() includes the series' first sample (bug fix vs the original mrug tool)", {
-  # A single, large first sample should visibly affect the smallest-scale
-  # fluctuation value if (and only if) index 0 is included in the windowing.
-  x <- c(1000, rnorm(500))
-  res <- sda(x, scale_min = 5L, fit_max = 100)
-  expect_true(is.finite(res$F[1]))
-  expect_gt(res$F[1], 50)  # the outlier dominates any window it appears in
+  # sda_fluctuation_cpp() averages the per-window RMS deviation across ALL
+  # sliding windows at a given scale -- a single outlier only affects the
+  # one window it falls in, so its effect on F(k) is diluted by every other
+  # window, not a dominating max. Use a short series so that one affected
+  # window is a large share of the total, and compare against the same
+  # noise with no outlier prepended (rather than an absolute threshold).
+  set.seed(1)
+  noise <- rnorm(50)
+  x_with_outlier <- c(1000, noise)
+
+  res_with    <- sda(x_with_outlier, scale_min = 5L, fit_max = 20)
+  res_without <- sda(noise,          scale_min = 5L, fit_max = 20)
+
+  expect_true(is.finite(res_with$F[1]))
+  expect_gt(res_with$F[1], 3 * res_without$F[1])
 })
 
 test_that("sda() validates inputs", {
