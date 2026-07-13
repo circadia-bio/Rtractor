@@ -51,3 +51,8 @@ sample_entropy_counts_cpp <- function(y, m, tolerance) {
     .Call(`_Rtractor_sample_entropy_counts_cpp`, y, m, tolerance)
 }
 
+#' @keywords internal
+sda_fluctuation_cpp <- function(x, scales) {
+    .Call(`_Rtractor_sda_fluctuation_cpp`, x, scales)
+}
+

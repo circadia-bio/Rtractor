@@ -434,6 +434,124 @@ num_zerocross <- function(x) {
   num_zerocross_cpp(as.double(x))
 }
 
+#' Hurst Exponent via Standard Deviation Analysis (SDA)
+#'
+#' Estimates the Hurst exponent of a time series from the scaling of its
+#' Root-Mean-Square deviation from the local mean across a range of window
+#' sizes -- no detrending (Russ 1994). This is the method used to compute
+#' the Hurst exponent of body-sway time series in da Silva Costa et al.
+#' (2017), a fibromyalgia gait/balance study co-authored by Lucas Franca.
+#'
+#' Ported from Franca's own legacy `mrug` C++ tool (used to produce that
+#' paper's figures), with three bugs fixed rather than reproduced -- see
+#' `inst/COPYRIGHTS` for the full write-up. Treat this as a *corrected*
+#' re-implementation of the method, not a bit-exact match to the 2017
+#' paper's published numbers (the exact code snapshot used for that paper
+#' could not be identified).
+#'
+#' @param x Numeric vector. The time series to analyse, used directly (not
+#'   as increments) -- e.g. a displacement/position series, as in the
+#'   original body-sway application.
+#' @param scale_min Integer. Smallest window size. Default `5`, matching
+#'   the original implementation.
+#' @param scale_max Integer or `NULL`. Largest window size evaluated.
+#'   `NULL` (default) uses `floor(length(x) / 2)`, matching the original
+#'   tool's convention of scanning up to half the series length.
+#' @param growth Numeric > 1. Geometric growth factor applied between
+#'   successive window sizes. Default `1.1`, matching the original.
+#' @param force_below Integer. Below this window size, the window size is
+#'   incremented by 1 rather than by `growth`, to avoid repeated integer
+#'   window sizes at small scales (geometric growth by 1.1 often doesn't
+#'   move an integer forward until it's larger). Default `20`, matching
+#'   the original.
+#' @param fit_min,fit_max Integer. Window-size range used for the log-log
+#'   linear fit that yields the Hurst exponent. `fit_min` defaults to
+#'   `scale_min`; `fit_max` defaults to `floor(length(x) / 4)`, matching
+#'   the convention used in the CLI tool that produced the 2017 paper's
+#'   results.
+#'
+#' @return A list with:
+#'   \item{k}{Window sizes evaluated (integer vector).}
+#'   \item{F}{RMS fluctuation at each window size (numeric vector; `NA`
+#'     for any window size with no valid non-constant windows).}
+#'   \item{H}{The Hurst exponent: the slope of `log(F)` on `log(k)`, fit
+#'     over `[fit_min, fit_max]`.}
+#'   \item{se}{Standard error of `H`.}
+#'   \item{r_squared}{R-squared of the log-log fit.}
+#'   \item{intercept}{Intercept of the log-log fit.}
+#'   \item{n_fit}{Number of window sizes used in the fit.}
+#'
+#' @references
+#' Russ JC. Fractal Surfaces. New York, NY: Plenum; 1994.
+#'
+#' da Silva Costa I, Gamundi A, Miranda JGV, Franca LGS, De Santana CN,
+#' Montoya P. Altered functional performance in patients with
+#' fibromyalgia. Front Hum Neurosci 2017;11:14.
+#'
+#' @examples
+#' set.seed(1)
+#' sda(cumsum(rnorm(2000)), fit_max = 200)
+#'
+#' @export
+sda <- function(x, scale_min = 5L, scale_max = NULL, growth = 1.1,
+                force_below = 20L, fit_min = scale_min, fit_max = NULL) {
+  if (!is.numeric(x)) stop("`x` must be numeric.", call. = FALSE)
+  if (growth <= 1) stop("`growth` must be > 1.", call. = FALSE)
+
+  x <- as.double(x)
+  N <- length(x)
+  scale_min <- as.integer(scale_min)
+  if (is.null(scale_max)) scale_max <- N %/% 2L
+  scale_max <- as.integer(scale_max)
+  if (scale_max < scale_min) {
+    stop("`scale_max` must be >= `scale_min`.", call. = FALSE)
+  }
+  if (is.null(fit_max)) fit_max <- floor(N / 4)
+  fit_min <- as.integer(fit_min)
+  fit_max <- as.integer(fit_max)
+
+  scales <- .sda_scales(scale_min, scale_max, growth, as.integer(force_below))
+  Fk <- sda_fluctuation_cpp(x, scales)
+
+  keep <- scales >= fit_min & scales <= fit_max & is.finite(Fk) & Fk > 0
+  n_fit <- sum(keep)
+  if (n_fit < 2L) {
+    stop(
+      "Fewer than 2 valid window sizes fall in [fit_min, fit_max] = [",
+      fit_min, ", ", fit_max, "]; widen the range or check `x`.",
+      call. = FALSE
+    )
+  }
+
+  fit <- stats::lm(log(Fk[keep]) ~ log(scales[keep]))
+  co <- unname(stats::coef(fit))
+  se <- unname(sqrt(diag(stats::vcov(fit))))
+
+  list(
+    k = scales, F = Fk,
+    H = co[2], se = se[2],
+    r_squared = .r_squared(fit, log(Fk[keep])),
+    intercept = co[1],
+    n_fit = n_fit
+  )
+}
+
+#' @keywords internal
+.sda_scales <- function(scale_min, scale_max, growth, force_below) {
+  k <- scale_min
+  kaux <- force_below
+  scales <- integer(0)
+  while (k <= scale_max) {
+    scales <- c(scales, k)
+    k <- as.integer(growth * k)
+    if (k <= kaux) {
+      k <- k + 1L
+      kaux <- k
+    }
+  }
+  scales
+}
+
 # ---- Planned, not yet implemented -----------------------------------------
 #
 #   - box_counting_fd()      Box-counting fractal dimension

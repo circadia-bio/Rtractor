@@ -1,3 +1,27 @@
+## Rtractor 0.1.1  (2026-07)
+
+### 🌿 Fractal family
+
+* Added `sda()` — Hurst exponent via windowed Root-Mean-Square deviation
+  from the local mean, no detrending ("Standard Deviation Analysis";
+  Russ 1994). This is the method used to compute the Hurst exponent of
+  body-sway time series in da Silva Costa et al. (2017), a fibromyalgia
+  gait/balance study co-authored by Lucas França. Ported from França's
+  own legacy `mrug` C++ tool (used to produce that paper's figures), with
+  three known bugs fixed rather than reproduced, since the exact code
+  snapshot used for the 2017 results could not be identified:
+    1. An uninitialized class member (`int k`) was shadowed by a
+       same-named local variable, so the first sliding window at every
+       scale used an undefined window size instead of the intended one.
+    2. A `while (!file.eof())` read loop duplicated the final data row
+       and inflated the point count by one.
+    3. Windowing always started at index 1, not 0, silently dropping the
+       series' first sample from every window.
+  See `inst/COPYRIGHTS` for the full write-up. Because of this deviation,
+  treat `sda()`'s output as a *corrected* re-implementation of the
+  published method, not a bit-exact reproduction of the 2017 paper's
+  numbers.
+
 ## Rtractor 0.1.0  (2026-07)
 
 ### 📉 Multiscale family

@@ -141,6 +141,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// sda_fluctuation_cpp
+NumericVector sda_fluctuation_cpp(NumericVector x, IntegerVector scales);
+RcppExport SEXP _Rtractor_sda_fluctuation_cpp(SEXP xSEXP, SEXP scalesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type scales(scalesSEXP);
+    rcpp_result_gen = Rcpp::wrap(sda_fluctuation_cpp(x, scales));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_Rtractor_dfa_cpp", (DL_FUNC) &_Rtractor_dfa_cpp, 6},
@@ -153,6 +165,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Rtractor_higuchi_length_cpp", (DL_FUNC) &_Rtractor_higuchi_length_cpp, 2},
     {"_Rtractor_recurrence_microstate_entropy_cpp", (DL_FUNC) &_Rtractor_recurrence_microstate_entropy_cpp, 8},
     {"_Rtractor_sample_entropy_counts_cpp", (DL_FUNC) &_Rtractor_sample_entropy_counts_cpp, 3},
+    {"_Rtractor_sda_fluctuation_cpp", (DL_FUNC) &_Rtractor_sda_fluctuation_cpp, 2},
     {NULL, NULL, 0}
 };
 

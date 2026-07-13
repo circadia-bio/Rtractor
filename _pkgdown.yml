@@ -163,6 +163,7 @@ reference:
   - higuchi_fd
   - mfdma
   - chhabra_jensen
+  - sda
 
 - title: "Nonlinear time-domain features"
   desc: "Fast complexity/roughness descriptors, centralised from mrpheus."
