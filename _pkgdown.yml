@@ -35,6 +35,9 @@ template:
 
   includes:
     in_header: |
+      <!-- Fathom - beautiful, simple website analytics -->
+      <script src="https://cdn.usefathom.com/script.js" data-site="NKUSHGRU" defer></script>
+      <!-- / Fathom -->
       <meta name="theme-color" content="#23475C">
       <style>
         /* ── Navbar ── */
