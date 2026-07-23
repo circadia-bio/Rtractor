@@ -160,10 +160,10 @@ If you use Rtractor in your research, please cite it:
 
 ## 🤝 Related Tools
 
-- 🌙 [**mrpheus**](https://github.com/circadia-bio/mrpheus) — raw PSG/EEG signal analysis
-- ⚡ [**zeitR**](https://github.com/circadia-bio/zeitR) — wrist actigraphy pipeline
-- 🔄 [**hypnoR**](https://github.com/circadia-bio/hypnoR) — staging-agnostic hypnogram analysis
-- 🌀 [**dynR**](https://github.com/circadia-bio/dynR) — dynamic functional connectivity
+- 🪉 [**mrpheus**](https://github.com/circadia-bio/mrpheus) — raw PSG/EEG signal analysis
+- ⌚️ [**zeitR**](https://github.com/circadia-bio/zeitR) — wrist actigraphy pipeline
+- 😵‍💫 [**hypnoR**](https://github.com/circadia-bio/hypnoR) — staging-agnostic hypnogram analysis
+- 🧠 [**dynR**](https://github.com/circadia-bio/dynR) — dynamic functional connectivity
 - 🔬 [**circadia-bio**](https://github.com/circadia-bio) — the Circadia Lab GitHub organisation
 
 ## 📄 Licence
