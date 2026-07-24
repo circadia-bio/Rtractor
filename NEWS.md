@@ -1,3 +1,11 @@
+## Rtractor (development version)
+
+### 🐛 Bug fixes
+
+* Corrected hex sticker logo proportions to match the ecosystem-standard
+  aspect ratio.
+* Regenerated favicons from the corrected logo.
+
 ## Rtractor 0.1.1  (2026-07)
 
 ### 🧭 Embedding family (new)
