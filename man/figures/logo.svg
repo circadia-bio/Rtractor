@@ -9,6 +9,12 @@
       <circle cx="12" cy="12" r="1.6" fill="#9DC1D6" opacity="0.55"/>
     </pattern>
   </defs>
+
+  <!-- Widened 2.64% horizontally (about the hex's own centre, x=340) to bring
+       the outline from a 0.844 width:height ratio to the ecosystem-standard
+       0.866 (root-3-over-2) hex-sticker ratio, matching luxR/zeitR/etc. -->
+  <g transform="translate(340,0) scale(1.0264,1) translate(-340,0)">
+
   <polygon points="340,30 610,190 610,510 340,670 70,510 70,190" fill="#FFFFFF" clip-path="url(#hexclip)"/>
   <rect x="70" y="30" width="540" height="640" fill="url(#dotgrid)" clip-path="url(#hexclip)"/>
   <g clip-path="url(#hexclip)">
@@ -67,4 +73,6 @@
   <g transform="translate(228.304 536.0) scale(0.062000 -0.062000)"><path d="M45 0V700H307Q391 700 446.5 671.0Q502 642 529.0 593.5Q556 545 556 486Q556 430 529.5 381.5Q503 333 447.5 303.5Q392 274 305 274H180V0ZM408 0 264 308H410L562 0ZM180 372H298Q360 372 389.0 402.0Q418 432 418 481Q418 530 389.0 558.5Q360 587 298 587H180Z" fill="#FFB6A6"/></g>
   <polygon points="340,30 610,190 610,510 340,670 70,510 70,190" fill="none" stroke="#23475C" stroke-width="22"/>
   <polygon points="340,30 610,190 610,510 340,670 70,510 70,190" fill="none" stroke="#FFB6A6" stroke-width="5"/>
+
+  </g>
 </svg>
